@@ -18,9 +18,9 @@ MovieCard.propTypes = {
     Imageurl: PropTypes.string.isRequired,
     Description: PropTypes.string.isRequired,
     ReleaseYear: PropTypes.string.isRequired,
-    Ratings: PropTypes.string,
-    Genre: PropTypes.string,
-    Director: PropTypes.string,
+    Ratings: PropTypes.string.isRequired,
+    Genre: PropTypes.string.isRequired,
+    Director: PropTypes.string.isRequired,
   }).isRequired,
   onMovieClick: PropTypes.func.isRequired,
 };
