@@ -1,9 +1,11 @@
+$primary: Teal;
+$body-bg: peachpuff;
+
+@import '~bootstrap/scss/bootstrap.scss';
+
 $color: steelblue;
 
-img {
-  width: 500px;
-  height: 600px;
-}
+
 
 // .my-flix {
 //   color: $color;

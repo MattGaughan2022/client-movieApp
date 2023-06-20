@@ -2,15 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
 
+import "./movie-card.scss"
+
 export const MovieCard = ({ movie, onMovieClick }) => {
   return (
-    <Card
-      style={{ width: "35rem" }}
+    <Card className="h-100"
+      //style={{ width: "35rem" }}
       onClick={() => {
         onMovieClick(movie);
       }}
     >
-      <Card.Img variant="top" src={movie.Imageurl} />
+      <Card.Img style={{ cursor: "pointer" }} variant="top" src={movie.Imageurl} />
       <Card.Body>
         <Card.Title>{movie.Title}</Card.Title>
         <Card.Text>{movie.Director.Name}</Card.Text>
