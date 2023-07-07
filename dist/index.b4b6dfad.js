@@ -27197,15 +27197,19 @@ const MainView = ()=>{
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const storedToken = localStorage.getItem("token");
     const [movies, setMovies] = (0, _react.useState)([]);
-    const [user, setUser] = (0, _react.useState)(storedToken ? storedToken : null);
-    const [token, setToken] = (0, _react.useState)(null);
+    const [user, setUser] = (0, _react.useState)(storedUser ? storedUser : null);
+    const [token, setToken] = (0, _react.useState)(storedToken ? storedToken : null);
+    // const updateUser=user=>{
+    //   setUser(user);
+    //   localStorage.setItem("user", JSONstringify(user));
+    // }
     (0, _react.useEffect)(()=>{
+        if (!token) return;
         fetch("https://node-movie-api-mattg.herokuapp.com/movies", {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }).then((response)=>response.json()).then((data)=>{
-            // console.log(data);
             const moviesFromApi = data.map((doc)=>{
                 return {
                     id: doc._id,
@@ -27234,7 +27238,7 @@ const MainView = ()=>{
                 }
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 46,
+                lineNumber: 50,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
@@ -27253,7 +27257,7 @@ const MainView = ()=>{
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 56,
+                            lineNumber: 60,
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27273,7 +27277,7 @@ const MainView = ()=>{
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 70,
+                            lineNumber: 74,
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27287,13 +27291,18 @@ const MainView = ()=>{
                                 }, void 0, false, void 0, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                                     md: 8,
                                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
-                                        movies: movies
+                                        user: user,
+                                        token: token,
+                                        movies: movies,
+                                        onLoggedIn: (data)=>{
+                                            setUser(data);
+                                        }
                                     }, void 0, false, void 0, void 0)
                                 }, void 0, false, void 0, void 0)
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 89,
+                            lineNumber: 94,
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27307,6 +27316,8 @@ const MainView = ()=>{
                                             className: "mb-4",
                                             md: 3,
                                             children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
+                                                user: user,
+                                                token: token,
                                                 movie: movie
                                             }, void 0, false, void 0, void 0)
                                         }, movie.id, false, void 0, void 0))
@@ -27314,7 +27325,7 @@ const MainView = ()=>{
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 105,
+                            lineNumber: 113,
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27326,13 +27337,20 @@ const MainView = ()=>{
                                 }, void 0, false, void 0, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                                     md: 8,
                                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _profileView.ProfileView), {
-                                        user: user
+                                        user: user,
+                                        token: token,
+                                        movies: movies,
+                                        onLoggedOut: ()=>{
+                                            setUser(null);
+                                            setToken(null);
+                                            localStorage.clear();
+                                        }
                                     }, void 0, false, void 0, void 0)
                                 }, void 0, false, void 0, void 0)
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 123,
+                            lineNumber: 131,
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27344,37 +27362,37 @@ const MainView = ()=>{
                                     md: 5,
                                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _updateView.UpdateView), {
                                         user: user,
-                                        onLoggedIn: (user, token)=>{
+                                        token: token,
+                                        onUpdated: (user)=>{
                                             setUser(user);
-                                            setToken(token);
                                         }
                                     }, void 0, false, void 0, void 0)
                                 }, void 0, false, void 0, void 0)
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 137,
+                            lineNumber: 150,
                             columnNumber: 11
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/main-view/main-view.jsx",
-                    lineNumber: 55,
+                    lineNumber: 59,
                     columnNumber: 9
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 54,
+                lineNumber: 58,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 45,
+        lineNumber: 49,
         columnNumber: 5
     }, undefined);
 };
-_s(MainView, "HVg0F+pjCYrBPIbQjtgSUG+//54=");
+_s(MainView, "PUnVg6+lI+7tf2Wb7jSoGqC3UJ4=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
@@ -27402,7 +27420,7 @@ var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
 var _reactBootstrap = require("react-bootstrap");
 var _reactRouterDom = require("react-router-dom");
 var _movieCardScss = require("./movie-card.scss");
-const MovieCard = ({ movie  })=>{
+const MovieCard = ({ user , token , movie  })=>{
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card), {
         className: "h-100 ",
         children: [
@@ -27416,12 +27434,12 @@ const MovieCard = ({ movie  })=>{
                     src: movie.Imageurl
                 }, void 0, false, {
                     fileName: "src/components/movie-card/movie-card.jsx",
-                    lineNumber: 18,
+                    lineNumber: 14,
                     columnNumber: 9
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 17,
+                lineNumber: 13,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Body, {
@@ -27431,14 +27449,14 @@ const MovieCard = ({ movie  })=>{
                         children: movie.Title
                     }, void 0, false, {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 25,
+                        lineNumber: 21,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Text, {
                         children: movie.Director.Name
                     }, void 0, false, {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 26,
+                        lineNumber: 22,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
@@ -27448,18 +27466,18 @@ const MovieCard = ({ movie  })=>{
                             children: "Open"
                         }, void 0, false, {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 28,
+                            lineNumber: 24,
                             columnNumber: 11
                         }, undefined)
                     }, void 0, false, {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 27,
+                        lineNumber: 23,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 24,
+                lineNumber: 20,
                 columnNumber: 7
             }, undefined)
         ]
@@ -27472,6 +27490,7 @@ const MovieCard = ({ movie  })=>{
 _c = MovieCard;
 MovieCard.propTypes = {
     movie: (0, _propTypesDefault.default).shape({
+        id: (0, _propTypesDefault.default).string.isRequired,
         Title: (0, _propTypesDefault.default).string.isRequired,
         Imageurl: (0, _propTypesDefault.default).string.isRequired,
         Description: (0, _propTypesDefault.default).string.isRequired,
@@ -40819,7 +40838,7 @@ exports.default = Tooltip;
 
 },{"classnames":"jocGM","react":"21dqq","./ThemeProvider":"dVixI","./helpers":"gotcT","./getInitialPopperStyles":"c8j3Q","react/jsx-runtime":"6AEwr","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9xmpe":[function(require,module,exports) {
 /**
- * React Router DOM v6.13.0
+ * React Router DOM v6.14.1
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -40992,60 +41011,88 @@ function getSearchParamsForLocation(locationSearch, defaultSearchParams) {
     }
     return searchParams;
 }
-function getFormSubmissionInfo(target, options, basename) {
+// One-time check for submitter support
+let _formDataSupportsSubmitter = null;
+function isFormDataSubmitterSupported() {
+    if (_formDataSupportsSubmitter === null) try {
+        new FormData(document.createElement("form"), // @ts-expect-error if FormData supports the submitter parameter, this will throw
+        0);
+        _formDataSupportsSubmitter = false;
+    } catch (e) {
+        _formDataSupportsSubmitter = true;
+    }
+    return _formDataSupportsSubmitter;
+}
+const supportedFormEncTypes = new Set([
+    "application/x-www-form-urlencoded",
+    "multipart/form-data",
+    "text/plain"
+]);
+function getFormEncType(encType) {
+    if (encType != null && !supportedFormEncTypes.has(encType)) {
+        (0, _router.UNSAFE_warning)(false, '"' + encType + '" is not a valid `encType` for `<Form>`/`<fetcher.Form>` ' + ('and will default to "' + defaultEncType + '"'));
+        return null;
+    }
+    return encType;
+}
+function getFormSubmissionInfo(target, basename) {
     let method;
-    let action = null;
+    let action;
     let encType;
     let formData;
+    let body;
     if (isFormElement(target)) {
-        let submissionTrigger = options.submissionTrigger;
-        if (options.action) action = options.action;
-        else {
-            // When grabbing the action from the element, it will have had the basename
-            // prefixed to ensure non-JS scenarios work, so strip it since we'll
-            // re-prefix in the router
-            let attr = target.getAttribute("action");
-            action = attr ? (0, _router.stripBasename)(attr, basename) : null;
-        }
-        method = options.method || target.getAttribute("method") || defaultMethod;
-        encType = options.encType || target.getAttribute("enctype") || defaultEncType;
+        // When grabbing the action from the element, it will have had the basename
+        // prefixed to ensure non-JS scenarios work, so strip it since we'll
+        // re-prefix in the router
+        let attr = target.getAttribute("action");
+        action = attr ? (0, _router.stripBasename)(attr, basename) : null;
+        method = target.getAttribute("method") || defaultMethod;
+        encType = getFormEncType(target.getAttribute("enctype")) || defaultEncType;
         formData = new FormData(target);
-        if (submissionTrigger && submissionTrigger.name) formData.append(submissionTrigger.name, submissionTrigger.value);
     } else if (isButtonElement(target) || isInputElement(target) && (target.type === "submit" || target.type === "image")) {
         let form = target.form;
         if (form == null) throw new Error('Cannot submit a <button> or <input type="submit"> without a <form>');
         // <button>/<input type="submit"> may override attributes of <form>
-        if (options.action) action = options.action;
-        else {
-            // When grabbing the action from the element, it will have had the basename
-            // prefixed to ensure non-JS scenarios work, so strip it since we'll
-            // re-prefix in the router
-            let attr = target.getAttribute("formaction") || form.getAttribute("action");
-            action = attr ? (0, _router.stripBasename)(attr, basename) : null;
+        // When grabbing the action from the element, it will have had the basename
+        // prefixed to ensure non-JS scenarios work, so strip it since we'll
+        // re-prefix in the router
+        let attr = target.getAttribute("formaction") || form.getAttribute("action");
+        action = attr ? (0, _router.stripBasename)(attr, basename) : null;
+        method = target.getAttribute("formmethod") || form.getAttribute("method") || defaultMethod;
+        encType = getFormEncType(target.getAttribute("formenctype")) || getFormEncType(form.getAttribute("enctype")) || defaultEncType;
+        // Build a FormData object populated from a form and submitter
+        formData = new FormData(form, target);
+        // If this browser doesn't support the `FormData(el, submitter)` format,
+        // then tack on the submitter value at the end.  This is a lightweight
+        // solution that is not 100% spec compliant.  For complete support in older
+        // browsers, consider using the `formdata-submitter-polyfill` package
+        if (!isFormDataSubmitterSupported()) {
+            let { name , type , value  } = target;
+            if (type === "image") {
+                let prefix = name ? name + "." : "";
+                formData.append(prefix + "x", "0");
+                formData.append(prefix + "y", "0");
+            } else if (name) formData.append(name, value);
         }
-        method = options.method || target.getAttribute("formmethod") || form.getAttribute("method") || defaultMethod;
-        encType = options.encType || target.getAttribute("formenctype") || form.getAttribute("enctype") || defaultEncType;
-        formData = new FormData(form);
-        // Include name + value from a <button>, appending in case the button name
-        // matches an existing input name
-        if (target.name) formData.append(target.name, target.value);
     } else if (isHtmlElement(target)) throw new Error('Cannot submit element that is not <form>, <button>, or <input type="submit|image">');
     else {
-        method = options.method || defaultMethod;
-        action = options.action || null;
-        encType = options.encType || defaultEncType;
-        if (target instanceof FormData) formData = target;
-        else {
-            formData = new FormData();
-            if (target instanceof URLSearchParams) for (let [name, value] of target)formData.append(name, value);
-            else if (target != null) for (let name of Object.keys(target))formData.append(name, target[name]);
-        }
+        method = defaultMethod;
+        action = null;
+        encType = defaultEncType;
+        body = target;
+    }
+    // Send body for <Form encType="text/plain" so we encode it into text
+    if (formData && encType === "text/plain") {
+        body = formData;
+        formData = undefined;
     }
     return {
         action,
         method: method.toLowerCase(),
         encType,
-        formData
+        formData,
+        body
     };
 }
 const _excluded = [
@@ -41071,8 +41118,7 @@ const _excluded = [
     "method",
     "action",
     "onSubmit",
-    "fetcherKey",
-    "routeId",
+    "submit",
     "relative",
     "preventScrollReset"
 ];
@@ -41130,6 +41176,32 @@ function deserializeErrors(errors) {
     }
     return serialized;
 }
+//#endregion
+////////////////////////////////////////////////////////////////////////////////
+//#region Components
+////////////////////////////////////////////////////////////////////////////////
+/**
+  Webpack + React 17 fails to compile on any of the following because webpack
+  complains that `startTransition` doesn't exist in `React`:
+  * import { startTransition } from "react"
+  * import * as React from from "react";
+    "startTransition" in React ? React.startTransition(() => setState()) : setState()
+  * import * as React from from "react";
+    "startTransition" in React ? React["startTransition"](() => setState()) : setState()
+
+  Moving it to a constant such as the following solves the Webpack/React 17 issue:
+  * import * as React from from "react";
+    const START_TRANSITION = "startTransition";
+    START_TRANSITION in React ? React[START_TRANSITION](() => setState()) : setState()
+
+  However, that introduces webpack/terser minification issues in production builds
+  in React 18 where minification/obfuscation ends up removing the call of
+  React.startTransition entirely from the first half of the ternary.  Grabbing
+  this exported reference once up front resolves that issue.
+
+  See https://github.com/remix-run/react-router/issues/10579
+*/ const START_TRANSITION = "startTransition";
+const startTransitionImpl = _react[START_TRANSITION];
 /**
  * A `<Router>` for use in web browsers. Provides the cleanest URLs.
  */ function BrowserRouter(_ref) {
@@ -41146,7 +41218,7 @@ function deserializeErrors(errors) {
     });
     let { v7_startTransition  } = future || {};
     let setState = _react.useCallback((newState)=>{
-        v7_startTransition && (0, _reactRouter.UNSAFE_startTransitionImpl) ? (0, _reactRouter.UNSAFE_startTransitionImpl)(()=>setStateImpl(newState)) : setStateImpl(newState);
+        v7_startTransition && startTransitionImpl ? startTransitionImpl(()=>setStateImpl(newState)) : setStateImpl(newState);
     }, [
         setStateImpl,
         v7_startTransition
@@ -41180,7 +41252,7 @@ function deserializeErrors(errors) {
     });
     let { v7_startTransition  } = future || {};
     let setState = _react.useCallback((newState)=>{
-        v7_startTransition && (0, _reactRouter.UNSAFE_startTransitionImpl) ? (0, _reactRouter.UNSAFE_startTransitionImpl)(()=>setStateImpl(newState)) : setStateImpl(newState);
+        v7_startTransition && startTransitionImpl ? startTransitionImpl(()=>setStateImpl(newState)) : setStateImpl(newState);
     }, [
         setStateImpl,
         v7_startTransition
@@ -41210,7 +41282,7 @@ function deserializeErrors(errors) {
     });
     let { v7_startTransition  } = future || {};
     let setState = _react.useCallback((newState)=>{
-        v7_startTransition && (0, _reactRouter.UNSAFE_startTransitionImpl) ? (0, _reactRouter.UNSAFE_startTransitionImpl)(()=>setStateImpl(newState)) : setStateImpl(newState);
+        v7_startTransition && startTransitionImpl ? startTransitionImpl(()=>setStateImpl(newState)) : setStateImpl(newState);
     }, [
         setStateImpl,
         v7_startTransition
@@ -41335,14 +41407,15 @@ NavLink.displayName = "NavLink";
  * requests, allowing components to add nicer UX to the page as the form is
  * submitted and returns with data.
  */ const Form = /*#__PURE__*/ _react.forwardRef((props, ref)=>{
+    let submit = useSubmit();
     return /*#__PURE__*/ _react.createElement(FormImpl, _extends({}, props, {
+        submit: submit,
         ref: ref
     }));
 });
 Form.displayName = "Form";
 const FormImpl = /*#__PURE__*/ _react.forwardRef((_ref6, forwardedRef)=>{
-    let { reloadDocument , replace , method =defaultMethod , action , onSubmit , fetcherKey , routeId , relative , preventScrollReset  } = _ref6, props = _objectWithoutPropertiesLoose(_ref6, _excluded3);
-    let submit = useSubmitImpl(fetcherKey, routeId);
+    let { reloadDocument , replace , method =defaultMethod , action , onSubmit , submit , relative , preventScrollReset  } = _ref6, props = _objectWithoutPropertiesLoose(_ref6, _excluded3);
     let formMethod = method.toLowerCase() === "get" ? "get" : "post";
     let formAction = useFormAction(action, {
         relative
@@ -41387,7 +41460,8 @@ ScrollRestoration.displayName = "ScrollRestoration";
 var DataRouterHook;
 (function(DataRouterHook) {
     DataRouterHook["UseScrollRestoration"] = "useScrollRestoration";
-    DataRouterHook["UseSubmitImpl"] = "useSubmitImpl";
+    DataRouterHook["UseSubmit"] = "useSubmit";
+    DataRouterHook["UseSubmitFetcher"] = "useSubmitFetcher";
     DataRouterHook["UseFetcher"] = "useFetcher";
 })(DataRouterHook || (DataRouterHook = {}));
 var DataRouterStateHook;
@@ -41472,40 +41546,57 @@ function useDataRouterState(hookName) {
         setSearchParams
     ];
 }
+function validateClientSideSubmission() {
+    if (typeof document === "undefined") throw new Error("You are calling submit during the server render. Try calling submit within a `useEffect` or callback instead.");
+}
 /**
  * Returns a function that may be used to programmatically submit a form (or
  * some arbitrary data) to the server.
  */ function useSubmit() {
-    return useSubmitImpl();
-}
-function useSubmitImpl(fetcherKey, fetcherRouteId) {
-    let { router  } = useDataRouterContext(DataRouterHook.UseSubmitImpl);
+    let { router  } = useDataRouterContext(DataRouterHook.UseSubmit);
     let { basename  } = _react.useContext((0, _reactRouter.UNSAFE_NavigationContext));
     let currentRouteId = (0, _reactRouter.UNSAFE_useRouteId)();
     return _react.useCallback(function(target, options) {
         if (options === void 0) options = {};
-        if (typeof document === "undefined") throw new Error("You are calling submit during the server render. Try calling submit within a `useEffect` or callback instead.");
-        let { action , method , encType , formData  } = getFormSubmissionInfo(target, options, basename);
-        // Base options shared between fetch() and navigate()
-        let opts = {
+        validateClientSideSubmission();
+        let { action , method , encType , formData , body  } = getFormSubmissionInfo(target, basename);
+        router.navigate(options.action || action, {
             preventScrollReset: options.preventScrollReset,
             formData,
-            formMethod: method,
-            formEncType: encType
-        };
-        if (fetcherKey) {
-            !(fetcherRouteId != null) && (0, _router.UNSAFE_invariant)(false, "No routeId available for useFetcher()");
-            router.fetch(fetcherKey, fetcherRouteId, action, opts);
-        } else router.navigate(action, _extends({}, opts, {
+            body,
+            formMethod: options.method || method,
+            formEncType: options.encType || encType,
             replace: options.replace,
             fromRouteId: currentRouteId
-        }));
+        });
+    }, [
+        router,
+        basename,
+        currentRouteId
+    ]);
+}
+/**
+ * Returns the implementation for fetcher.submit
+ */ function useSubmitFetcher(fetcherKey, fetcherRouteId) {
+    let { router  } = useDataRouterContext(DataRouterHook.UseSubmitFetcher);
+    let { basename  } = _react.useContext((0, _reactRouter.UNSAFE_NavigationContext));
+    return _react.useCallback(function(target, options) {
+        if (options === void 0) options = {};
+        validateClientSideSubmission();
+        let { action , method , encType , formData , body  } = getFormSubmissionInfo(target, basename);
+        !(fetcherRouteId != null) && (0, _router.UNSAFE_invariant)(false, "No routeId available for useFetcher()");
+        router.fetch(fetcherKey, fetcherRouteId, options.action || action, {
+            preventScrollReset: options.preventScrollReset,
+            formData,
+            body,
+            formMethod: options.method || method,
+            formEncType: options.encType || encType
+        });
     }, [
         router,
         basename,
         fetcherKey,
-        fetcherRouteId,
-        currentRouteId
+        fetcherRouteId
     ]);
 }
 // v7: Eventually we should deprecate this entirely in favor of using the
@@ -41555,10 +41646,10 @@ function useFormAction(action, _temp2) {
 }
 function createFetcherForm(fetcherKey, routeId) {
     let FetcherForm = /*#__PURE__*/ _react.forwardRef((props, ref)=>{
+        let submit = useSubmitFetcher(fetcherKey, routeId);
         return /*#__PURE__*/ _react.createElement(FormImpl, _extends({}, props, {
             ref: ref,
-            fetcherKey: fetcherKey,
-            routeId: routeId
+            submit: submit
         }));
     });
     FetcherForm.displayName = "fetcher.Form";
@@ -41585,7 +41676,7 @@ let fetcherId = 0;
             !routeId && (0, _router.UNSAFE_invariant)(false, "No routeId available for fetcher.load()");
             router.fetch(fetcherKey, routeId, href);
         });
-    let submit = useSubmitImpl(fetcherKey, routeId);
+    let submit = useSubmitFetcher(fetcherKey, routeId);
     let fetcher = router.getFetcher(fetcherKey);
     let fetcherWithComponents = _react.useMemo(()=>_extends({
             Form,
@@ -41631,6 +41722,7 @@ let savedScrollPositions = {};
     let { getKey , storageKey  } = _temp3 === void 0 ? {} : _temp3;
     let { router  } = useDataRouterContext(DataRouterHook.UseScrollRestoration);
     let { restoreScrollPosition , preventScrollReset  } = useDataRouterState(DataRouterStateHook.UseScrollRestoration);
+    let { basename  } = _react.useContext((0, _reactRouter.UNSAFE_NavigationContext));
     let location = (0, _reactRouter.useLocation)();
     let matches = (0, _reactRouter.useMatches)();
     let navigation = (0, _reactRouter.useNavigation)();
@@ -41672,10 +41764,14 @@ let savedScrollPositions = {};
         // Enable scroll restoration in the router
         // eslint-disable-next-line react-hooks/rules-of-hooks
         _react.useLayoutEffect(()=>{
-            let disableScrollRestoration = router == null ? void 0 : router.enableScrollRestoration(savedScrollPositions, ()=>window.scrollY, getKey);
+            let getKeyWithoutBasename = getKey && basename !== "/" ? (location, matches)=>getKey(_extends({}, location, {
+                    pathname: (0, _router.stripBasename)(location.pathname, basename) || location.pathname
+                }), matches) : getKey;
+            let disableScrollRestoration = router == null ? void 0 : router.enableScrollRestoration(savedScrollPositions, ()=>window.scrollY, getKeyWithoutBasename);
             return ()=>disableScrollRestoration && disableScrollRestoration();
         }, [
             router,
+            basename,
             getKey
         ]);
         // Restore scrolling when state.restoreScrollPosition changes
@@ -41781,7 +41877,7 @@ let savedScrollPositions = {};
 
 },{"react":"21dqq","react-router":"dbWyW","@remix-run/router":"5ncDG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dbWyW":[function(require,module,exports) {
 /**
- * React Router v6.13.0
+ * React Router v6.14.1
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -41817,7 +41913,6 @@ parcelHelpers.export(exports, "UNSAFE_LocationContext", ()=>LocationContext);
 parcelHelpers.export(exports, "UNSAFE_NavigationContext", ()=>NavigationContext);
 parcelHelpers.export(exports, "UNSAFE_RouteContext", ()=>RouteContext);
 parcelHelpers.export(exports, "UNSAFE_mapRouteProperties", ()=>mapRouteProperties);
-parcelHelpers.export(exports, "UNSAFE_startTransitionImpl", ()=>startTransitionImpl);
 parcelHelpers.export(exports, "UNSAFE_useRouteId", ()=>useRouteId);
 parcelHelpers.export(exports, "UNSAFE_useRoutesImpl", ()=>useRoutesImpl);
 parcelHelpers.export(exports, "createMemoryRouter", ()=>createMemoryRouter);
@@ -41857,31 +41952,6 @@ function _extends() {
     };
     return _extends.apply(this, arguments);
 }
-/**
-  Not a true "polyfill" since we guard via the feature flag at runtime,
-  but close enough :)
-
-  Webpack + React 17 fails to compile on any of the following because webpack
-  complains that `startTransition` doesn't exist in `React`:
-  * import { startTransition } from "react"
-  * import * as React from from "react";
-    "startTransition" in React ? React.startTransition(() => setState()) : setState()
-  * import * as React from from "react";
-    "startTransition" in React ? React["startTransition"](() => setState()) : setState()
-
-  Moving it to a constant such as the following solves the Webpack/React 17 issue:
-  * import * as React from from "react";
-    const START_TRANSITION = "startTransition";
-    START_TRANSITION in React ? React[START_TRANSITION](() => setState()) : setState()
-
-  However, that introduces webpack/terser minification issues in production builds
-  in React 18 where minification/obfuscation ends up removing the call of
-  React.startTransition entirely from the first half of the ternary.  Grabbing
-  this exported reference once up front resolves that issue.
-
-  See https://github.com/remix-run/react-router/issues/10579
-*/ const START_TRANSITION = "startTransition";
-var startTransitionImpl = _react[START_TRANSITION];
 // Create react-specific types from the agnostic types in @remix-run/router to
 // export from react-router
 const DataRouterContext = /*#__PURE__*/ _react.createContext(null);
@@ -42484,23 +42554,52 @@ let blockerId = 0;
  * using half-filled form data.  This does not handle hard-reloads or
  * cross-origin navigations.
  */ function useBlocker(shouldBlock) {
-    let { router  } = useDataRouterContext(DataRouterHook.UseBlocker);
+    let { router , basename  } = useDataRouterContext(DataRouterHook.UseBlocker);
     let state = useDataRouterState(DataRouterStateHook.UseBlocker);
-    let [blockerKey] = _react.useState(()=>String(++blockerId));
-    let blockerFunction = _react.useCallback((args)=>{
-        return typeof shouldBlock === "function" ? !!shouldBlock(args) : !!shouldBlock;
+    let [blockerKey, setBlockerKey] = _react.useState("");
+    let blockerFunction = _react.useCallback((arg)=>{
+        if (typeof shouldBlock !== "function") return !!shouldBlock;
+        if (basename === "/") return shouldBlock(arg);
+        // If they provided us a function and we've got an active basename, strip
+        // it from the locations we expose to the user to match the behavior of
+        // useLocation
+        let { currentLocation , nextLocation , historyAction  } = arg;
+        return shouldBlock({
+            currentLocation: _extends({}, currentLocation, {
+                pathname: (0, _router.stripBasename)(currentLocation.pathname, basename) || currentLocation.pathname
+            }),
+            nextLocation: _extends({}, nextLocation, {
+                pathname: (0, _router.stripBasename)(nextLocation.pathname, basename) || nextLocation.pathname
+            }),
+            historyAction
+        });
     }, [
+        basename,
         shouldBlock
     ]);
-    let blocker = router.getBlocker(blockerKey, blockerFunction);
-    // Cleanup on unmount
-    _react.useEffect(()=>()=>router.deleteBlocker(blockerKey), [
-        router,
-        blockerKey
+    // This effect is in charge of blocker key assignment and deletion (which is
+    // tightly coupled to the key)
+    _react.useEffect(()=>{
+        let key = String(++blockerId);
+        setBlockerKey(key);
+        return ()=>router.deleteBlocker(key);
+    }, [
+        router
     ]);
-    // Prefer the blocker from state since DataRouterContext is memoized so this
-    // ensures we update on blocker state updates
-    return state.blockers.get(blockerKey) || blocker;
+    // This effect handles assigning the blockerFunction.  This is to handle
+    // unstable blocker function identities, and happens only after the prior
+    // effect so we don't get an orphaned blockerFunction in the router with a
+    // key of "".  Until then we just have the IDLE_BLOCKER.
+    _react.useEffect(()=>{
+        if (blockerKey !== "") router.getBlocker(blockerKey, blockerFunction);
+    }, [
+        router,
+        blockerKey,
+        blockerFunction
+    ]);
+    // Prefer the blocker from `state` not `router.state` since DataRouterContext
+    // is memoized so this ensures we update on blocker state updates
+    return blockerKey && state.blockers.has(blockerKey) ? state.blockers.get(blockerKey) : (0, _router.IDLE_BLOCKER);
 }
 /**
  * Stable version of useNavigate that is used when we are in the context of
@@ -42535,6 +42634,28 @@ function warningOnce(key, cond, message) {
         (0, _router.UNSAFE_warning)(false, message);
     }
 }
+/**
+  Webpack + React 17 fails to compile on any of the following because webpack
+  complains that `startTransition` doesn't exist in `React`:
+  * import { startTransition } from "react"
+  * import * as React from from "react";
+    "startTransition" in React ? React.startTransition(() => setState()) : setState()
+  * import * as React from from "react";
+    "startTransition" in React ? React["startTransition"](() => setState()) : setState()
+
+  Moving it to a constant such as the following solves the Webpack/React 17 issue:
+  * import * as React from from "react";
+    const START_TRANSITION = "startTransition";
+    START_TRANSITION in React ? React[START_TRANSITION](() => setState()) : setState()
+
+  However, that introduces webpack/terser minification issues in production builds
+  in React 18 where minification/obfuscation ends up removing the call of
+  React.startTransition entirely from the first half of the ternary.  Grabbing
+  this exported reference once up front resolves that issue.
+
+  See https://github.com/remix-run/react-router/issues/10579
+*/ const START_TRANSITION = "startTransition";
+const startTransitionImpl = _react[START_TRANSITION];
 /**
  * Given a Remix Router instance, render the appropriate UI
  */ function RouterProvider(_ref) {
@@ -42947,7 +43068,7 @@ function createMemoryRouter(routes, opts) {
 
 },{"react":"21dqq","@remix-run/router":"5ncDG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5ncDG":[function(require,module,exports) {
 /**
- * @remix-run/router v1.6.3
+ * @remix-run/router v1.7.1
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -43608,22 +43729,21 @@ function matchRouteBranch(branch, pathname) {
     }
     // ensure `/` is added at the beginning if the path is absolute
     const prefix = path.startsWith("/") ? "/" : "";
+    const stringify = (p)=>p == null ? "" : typeof p === "string" ? p : String(p);
     const segments = path.split(/\/+/).map((segment, index, array)=>{
         const isLastSegment = index === array.length - 1;
         // only apply the splat if it's the last segment
         if (isLastSegment && segment === "*") {
             const star = "*";
-            const starParam = params[star];
             // Apply the splat
-            return starParam;
+            return stringify(params[star]);
         }
         const keyMatch = segment.match(/^:(\w+)(\??)$/);
         if (keyMatch) {
             const [, key, optional] = keyMatch;
             let param = params[key];
-            if (optional === "?") return param == null ? "" : param;
-            if (param == null) invariant(false, 'Missing ":' + key + '" param');
-            return param;
+            invariant(optional === "?" || param != null, 'Missing ":' + key + '" param');
+            return stringify(param);
         }
         // Remove any optional markers from optional static segments
         return segment.replace(/\?$/g, "");
@@ -44052,7 +44172,9 @@ const IDLE_NAVIGATION = {
     formMethod: undefined,
     formAction: undefined,
     formEncType: undefined,
-    formData: undefined
+    formData: undefined,
+    json: undefined,
+    text: undefined
 };
 const IDLE_FETCHER = {
     state: "idle",
@@ -44060,7 +44182,9 @@ const IDLE_FETCHER = {
     formMethod: undefined,
     formAction: undefined,
     formEncType: undefined,
-    formData: undefined
+    formData: undefined,
+    json: undefined,
+    text: undefined
 };
 const IDLE_BLOCKER = {
     state: "unblocked",
@@ -44241,9 +44365,10 @@ const defaultMapRouteProperties = (route)=>({
                         init.history.go(delta);
                     },
                     reset () {
-                        deleteBlocker(blockerKey);
+                        let blockers = new Map(state.blockers);
+                        blockers.set(blockerKey, IDLE_BLOCKER);
                         updateState({
-                            blockers: new Map(router.state.blockers)
+                            blockers
                         });
                     }
                 });
@@ -44303,7 +44428,11 @@ const defaultMapRouteProperties = (route)=>({
         let loaderData = newState.loaderData ? mergeLoaderData(state.loaderData, newState.loaderData, newState.matches || [], newState.errors) : state.loaderData;
         // On a successful navigation we can assume we got through all blockers
         // so we can start fresh
-        for (let [key] of blockerFunctions)deleteBlocker(key);
+        let blockers = state.blockers;
+        if (blockers.size > 0) {
+            blockers = new Map(blockers);
+            blockers.forEach((_, k)=>blockers.set(k, IDLE_BLOCKER));
+        }
         // Always respect the user flag.  Otherwise don't reset on mutation
         // submission navigations unless they redirect
         let preventScrollReset = pendingPreventScrollReset === true || state.navigation.formMethod != null && isMutationMethod(state.navigation.formMethod) && ((_location$state2 = location.state) == null ? void 0 : _location$state2._isRedirect) !== true;
@@ -44311,6 +44440,10 @@ const defaultMapRouteProperties = (route)=>({
             dataRoutes = inFlightDataRoutes;
             inFlightDataRoutes = undefined;
         }
+        if (isUninterruptedRevalidation) ;
+        else if (pendingAction === Action.Pop) ;
+        else if (pendingAction === Action.Push) init.history.push(location, location.state);
+        else if (pendingAction === Action.Replace) init.history.replace(location, location.state);
         updateState(_extends({}, newState, {
             actionData,
             loaderData,
@@ -44321,12 +44454,8 @@ const defaultMapRouteProperties = (route)=>({
             revalidation: "idle",
             restoreScrollPosition: getSavedScrollPosition(location, newState.matches || state.matches),
             preventScrollReset,
-            blockers: new Map(state.blockers)
+            blockers
         }));
-        if (isUninterruptedRevalidation) ;
-        else if (pendingAction === Action.Pop) ;
-        else if (pendingAction === Action.Push) init.history.push(location, location.state);
-        else if (pendingAction === Action.Replace) init.history.replace(location, location.state);
         // Reset stateful navigation vars
         pendingAction = Action.Pop;
         pendingPreventScrollReset = false;
@@ -44383,9 +44512,10 @@ const defaultMapRouteProperties = (route)=>({
                     navigate(to, opts);
                 },
                 reset () {
-                    deleteBlocker(blockerKey);
+                    let blockers = new Map(state.blockers);
+                    blockers.set(blockerKey, IDLE_BLOCKER);
                     updateState({
-                        blockers: new Map(state.blockers)
+                        blockers
                     });
                 }
             });
@@ -44494,11 +44624,7 @@ const defaultMapRouteProperties = (route)=>({
             if (actionOutput.shortCircuited) return;
             pendingActionData = actionOutput.pendingActionData;
             pendingError = actionOutput.pendingActionError;
-            let navigation = _extends({
-                state: "loading",
-                location
-            }, opts.submission);
-            loadingNavigation = navigation;
+            loadingNavigation = getLoadingNavigation(location, opts.submission);
             // Create a GET request for the loaders
             request = new Request(request.url, {
                 signal: request.signal
@@ -44523,12 +44649,10 @@ const defaultMapRouteProperties = (route)=>({
     // Call the action matched by the leaf route for this navigation and handle
     // redirects/errors
     async function handleAction(request, location, submission, matches, opts) {
+        if (opts === void 0) opts = {};
         interruptActiveLoads();
         // Put us in a submitting state
-        let navigation = _extends({
-            state: "submitting",
-            location
-        }, submission);
+        let navigation = getSubmittingNavigation(location, submission);
         updateState({
             navigation
         });
@@ -44594,28 +44718,12 @@ const defaultMapRouteProperties = (route)=>({
     // errors, etc.
     async function handleLoaders(request, location, matches, overrideNavigation, submission, fetcherSubmission, replace, pendingActionData, pendingError) {
         // Figure out the right navigation we want to use for data loading
-        let loadingNavigation = overrideNavigation;
-        if (!loadingNavigation) {
-            let navigation = _extends({
-                state: "loading",
-                location,
-                formMethod: undefined,
-                formAction: undefined,
-                formEncType: undefined,
-                formData: undefined
-            }, submission);
-            loadingNavigation = navigation;
-        }
+        let loadingNavigation = overrideNavigation || getLoadingNavigation(location, submission);
         // If this was a redirect from an action we don't have a "submission" but
         // we have it on the loading navigation so use that if available
-        let activeSubmission = submission || fetcherSubmission ? submission || fetcherSubmission : loadingNavigation.formMethod && loadingNavigation.formAction && loadingNavigation.formData && loadingNavigation.formEncType ? {
-            formMethod: loadingNavigation.formMethod,
-            formAction: loadingNavigation.formAction,
-            formData: loadingNavigation.formData,
-            formEncType: loadingNavigation.formEncType
-        } : undefined;
+        let activeSubmission = submission || fetcherSubmission || getSubmissionFromNavigation(loadingNavigation);
         let routesToUse = inFlightDataRoutes || dataRoutes;
-        let [matchesToLoad, revalidatingFetchers] = getMatchesToLoad(init.history, state, matches, activeSubmission, location, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, fetchLoadMatches, routesToUse, basename, pendingActionData, pendingError);
+        let [matchesToLoad, revalidatingFetchers] = getMatchesToLoad(init.history, state, matches, activeSubmission, location, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, pendingActionData, pendingError);
         // Cancel pending deferreds for no-longer-matched routes or routes we're
         // about to reload.  Note that if this is an action reload we would have
         // already cancelled all pending deferreds so this would be a no-op
@@ -44644,15 +44752,7 @@ const defaultMapRouteProperties = (route)=>({
         if (!isUninterruptedRevalidation) {
             revalidatingFetchers.forEach((rf)=>{
                 let fetcher = state.fetchers.get(rf.key);
-                let revalidatingFetcher = {
-                    state: "loading",
-                    data: fetcher && fetcher.data,
-                    formMethod: undefined,
-                    formAction: undefined,
-                    formEncType: undefined,
-                    formData: undefined,
-                    " _hasFetcherDoneAnything ": true
-                };
+                let revalidatingFetcher = getLoadingFetcher(undefined, fetcher ? fetcher.data : undefined);
                 state.fetchers.set(rf.key, revalidatingFetcher);
             });
             let actionData = pendingActionData || state.actionData;
@@ -44668,6 +44768,7 @@ const defaultMapRouteProperties = (route)=>({
         }
         pendingNavigationLoadId = ++incrementingLoadId;
         revalidatingFetchers.forEach((rf)=>{
+            if (fetchControllers.has(rf.key)) abortFetcher(rf.key);
             if (rf.controller) // Fetchers use an independent AbortController so that aborting a fetcher
             // (via deleteFetcher) does not abort the triggering navigation that
             // triggered the revalidation
@@ -44732,7 +44833,11 @@ const defaultMapRouteProperties = (route)=>({
             }));
             return;
         }
-        let { path , submission  } = normalizeNavigateOptions(future.v7_normalizeFormMethod, true, normalizedPath, opts);
+        let { path , submission , error  } = normalizeNavigateOptions(future.v7_normalizeFormMethod, true, normalizedPath, opts);
+        if (error) {
+            setFetcherError(key, routeId, error);
+            return;
+        }
         let match = getTargetMatch(matches, path);
         pendingPreventScrollReset = (opts && opts.preventScrollReset) === true;
         if (submission && isMutationMethod(submission.formMethod)) {
@@ -44763,12 +44868,7 @@ const defaultMapRouteProperties = (route)=>({
         }
         // Put this fetcher into it's submitting state
         let existingFetcher = state.fetchers.get(key);
-        let fetcher = _extends({
-            state: "submitting"
-        }, submission, {
-            data: existingFetcher && existingFetcher.data,
-            " _hasFetcherDoneAnything ": true
-        });
+        let fetcher = getSubmittingFetcher(submission, existingFetcher);
         state.fetchers.set(key, fetcher);
         updateState({
             fetchers: new Map(state.fetchers)
@@ -44787,12 +44887,7 @@ const defaultMapRouteProperties = (route)=>({
         if (isRedirectResult(actionResult)) {
             fetchControllers.delete(key);
             fetchRedirectIds.add(key);
-            let loadingFetcher = _extends({
-                state: "loading"
-            }, submission, {
-                data: undefined,
-                " _hasFetcherDoneAnything ": true
-            });
+            let loadingFetcher = getLoadingFetcher(submission);
             state.fetchers.set(key, loadingFetcher);
             updateState({
                 fetchers: new Map(state.fetchers)
@@ -44819,14 +44914,9 @@ const defaultMapRouteProperties = (route)=>({
         invariant(matches, "Didn't find any matches after fetcher action");
         let loadId = ++incrementingLoadId;
         fetchReloadIds.set(key, loadId);
-        let loadFetcher = _extends({
-            state: "loading",
-            data: actionResult.data
-        }, submission, {
-            " _hasFetcherDoneAnything ": true
-        });
+        let loadFetcher = getLoadingFetcher(submission, actionResult.data);
         state.fetchers.set(key, loadFetcher);
-        let [matchesToLoad, revalidatingFetchers] = getMatchesToLoad(init.history, state, matches, submission, nextLocation, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, fetchLoadMatches, routesToUse, basename, {
+        let [matchesToLoad, revalidatingFetchers] = getMatchesToLoad(init.history, state, matches, submission, nextLocation, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, {
             [match.route.id]: actionResult.data
         }, undefined // No need to send through errors since we short circuit above
         );
@@ -44836,16 +44926,9 @@ const defaultMapRouteProperties = (route)=>({
         revalidatingFetchers.filter((rf)=>rf.key !== key).forEach((rf)=>{
             let staleKey = rf.key;
             let existingFetcher = state.fetchers.get(staleKey);
-            let revalidatingFetcher = {
-                state: "loading",
-                data: existingFetcher && existingFetcher.data,
-                formMethod: undefined,
-                formAction: undefined,
-                formEncType: undefined,
-                formData: undefined,
-                " _hasFetcherDoneAnything ": true
-            };
+            let revalidatingFetcher = getLoadingFetcher(undefined, existingFetcher ? existingFetcher.data : undefined);
             state.fetchers.set(staleKey, revalidatingFetcher);
+            if (fetchControllers.has(staleKey)) abortFetcher(staleKey);
             if (rf.controller) fetchControllers.set(staleKey, rf.controller);
         });
         updateState({
@@ -44866,15 +44949,7 @@ const defaultMapRouteProperties = (route)=>({
         // Since we let revalidations complete even if the submitting fetcher was
         // deleted, only put it back to idle if it hasn't been deleted
         if (state.fetchers.has(key)) {
-            let doneFetcher = {
-                state: "idle",
-                data: actionResult.data,
-                formMethod: undefined,
-                formAction: undefined,
-                formEncType: undefined,
-                formData: undefined,
-                " _hasFetcherDoneAnything ": true
-            };
+            let doneFetcher = getDoneFetcher(actionResult.data);
             state.fetchers.set(key, doneFetcher);
         }
         let didAbortFetchLoads = abortStaleFetchLoads(loadId);
@@ -44907,16 +44982,7 @@ const defaultMapRouteProperties = (route)=>({
     async function handleFetcherLoader(key, routeId, path, match, matches, submission) {
         let existingFetcher = state.fetchers.get(key);
         // Put this fetcher into it's loading state
-        let loadingFetcher = _extends({
-            state: "loading",
-            formMethod: undefined,
-            formAction: undefined,
-            formEncType: undefined,
-            formData: undefined
-        }, submission, {
-            data: existingFetcher && existingFetcher.data,
-            " _hasFetcherDoneAnything ": true
-        });
+        let loadingFetcher = getLoadingFetcher(submission, existingFetcher ? existingFetcher.data : undefined);
         state.fetchers.set(key, loadingFetcher);
         updateState({
             fetchers: new Map(state.fetchers)
@@ -44958,15 +45024,7 @@ const defaultMapRouteProperties = (route)=>({
         }
         invariant(!isDeferredResult(result), "Unhandled fetcher deferred data");
         // Put the fetcher back into an idle state
-        let doneFetcher = {
-            state: "idle",
-            data: result.data,
-            formMethod: undefined,
-            formAction: undefined,
-            formEncType: undefined,
-            formData: undefined,
-            " _hasFetcherDoneAnything ": true
-        };
+        let doneFetcher = getDoneFetcher(result.data);
         state.fetchers.set(key, doneFetcher);
         updateState({
             fetchers: new Map(state.fetchers)
@@ -45015,18 +45073,12 @@ const defaultMapRouteProperties = (route)=>({
         let redirectHistoryAction = replace === true ? Action.Replace : Action.Push;
         // Use the incoming submission if provided, fallback on the active one in
         // state.navigation
-        let { formMethod , formAction , formEncType , formData  } = state.navigation;
-        if (!submission && formMethod && formAction && formData && formEncType) submission = {
-            formMethod,
-            formAction,
-            formEncType,
-            formData
-        };
+        let activeSubmission = submission || getSubmissionFromNavigation(state.navigation);
         // If this was a 307/308 submission we want to preserve the HTTP method and
         // re-submit the GET/POST/PUT/PATCH/DELETE as a submission navigation to the
         // redirected location
-        if (redirectPreserveMethodStatusCodes.has(redirect.status) && submission && isMutationMethod(submission.formMethod)) await startNavigation(redirectHistoryAction, redirectLocation, {
-            submission: _extends({}, submission, {
+        if (redirectPreserveMethodStatusCodes.has(redirect.status) && activeSubmission && isMutationMethod(activeSubmission.formMethod)) await startNavigation(redirectHistoryAction, redirectLocation, {
+            submission: _extends({}, activeSubmission, {
                 formAction: redirect.location
             }),
             // Preserve this flag across redirects
@@ -45035,32 +45087,20 @@ const defaultMapRouteProperties = (route)=>({
         else if (isFetchActionRedirect) // For a fetch action redirect, we kick off a new loading navigation
         // without the fetcher submission, but we send it along for shouldRevalidate
         await startNavigation(redirectHistoryAction, redirectLocation, {
-            overrideNavigation: {
-                state: "loading",
-                location: redirectLocation,
-                formMethod: undefined,
-                formAction: undefined,
-                formEncType: undefined,
-                formData: undefined
-            },
-            fetcherSubmission: submission,
+            overrideNavigation: getLoadingNavigation(redirectLocation),
+            fetcherSubmission: activeSubmission,
             // Preserve this flag across redirects
             preventScrollReset: pendingPreventScrollReset
         });
-        else // Otherwise, we kick off a new loading navigation, preserving the
-        // submission info for the duration of this navigation
-        await startNavigation(redirectHistoryAction, redirectLocation, {
-            overrideNavigation: {
-                state: "loading",
-                location: redirectLocation,
-                formMethod: submission ? submission.formMethod : undefined,
-                formAction: submission ? submission.formAction : undefined,
-                formEncType: submission ? submission.formEncType : undefined,
-                formData: submission ? submission.formData : undefined
-            },
-            // Preserve this flag across redirects
-            preventScrollReset: pendingPreventScrollReset
-        });
+        else {
+            // If we have a submission, we will preserve it through the redirect navigation
+            let overrideNavigation = getLoadingNavigation(redirectLocation, activeSubmission);
+            await startNavigation(redirectHistoryAction, redirectLocation, {
+                overrideNavigation,
+                // Preserve this flag across redirects
+                preventScrollReset: pendingPreventScrollReset
+            });
+        }
     }
     async function callLoadersAndMaybeResolveData(currentMatches, matches, matchesToLoad, fetchersToLoad, request) {
         // Call all navigation loaders and revalidating fetcher loaders in parallel,
@@ -45137,15 +45177,7 @@ const defaultMapRouteProperties = (route)=>({
     function markFetchersDone(keys) {
         for (let key of keys){
             let fetcher = getFetcher(key);
-            let doneFetcher = {
-                state: "idle",
-                data: fetcher.data,
-                formMethod: undefined,
-                formAction: undefined,
-                formEncType: undefined,
-                formData: undefined,
-                " _hasFetcherDoneAnything ": true
-            };
+            let doneFetcher = getDoneFetcher(fetcher.data);
             state.fetchers.set(key, doneFetcher);
         }
     }
@@ -45193,9 +45225,10 @@ const defaultMapRouteProperties = (route)=>({
         // Poor mans state machine :)
         // https://mermaid.live/edit#pako:eNqVkc9OwzAMxl8l8nnjAYrEtDIOHEBIgwvKJTReGy3_lDpIqO27k6awMG0XcrLlnz87nwdonESogKXXBuE79rq75XZO3-yHds0RJVuv70YrPlUrCEe2HfrORS3rubqZfuhtpg5C9wk5tZ4VKcRUq88q9Z8RS0-48cE1iHJkL0ugbHuFLus9L6spZy8nX9MP2CNdomVaposqu3fGayT8T8-jJQwhepo_UtpgBQaDEUom04dZhAN1aJBDlUKJBxE1ceB2Smj0Mln-IBW5AFU2dwUiktt_2Qaq2dBfaKdEup85UV7Yd-dKjlnkabl2Pvr0DTkTreM
         invariant(blocker.state === "unblocked" && newBlocker.state === "blocked" || blocker.state === "blocked" && newBlocker.state === "blocked" || blocker.state === "blocked" && newBlocker.state === "proceeding" || blocker.state === "blocked" && newBlocker.state === "unblocked" || blocker.state === "proceeding" && newBlocker.state === "unblocked", "Invalid blocker state transition: " + blocker.state + " -> " + newBlocker.state);
-        state.blockers.set(key, newBlocker);
+        let blockers = new Map(state.blockers);
+        blockers.set(key, newBlocker);
         updateState({
-            blockers: new Map(state.blockers)
+            blockers
         });
     }
     function shouldBlockNavigation(_ref2) {
@@ -45237,7 +45270,7 @@ const defaultMapRouteProperties = (route)=>({
     function enableScrollRestoration(positions, getPosition, getKey) {
         savedScrollPositions = positions;
         getScrollPosition = getPosition;
-        getScrollRestorationKey = getKey || ((location)=>location.key);
+        getScrollRestorationKey = getKey || null;
         // Perform initial hydration scroll restoration, since we miss the boat on
         // the initial updateState() because we've not yet rendered <ScrollRestoration/>
         // and therefore have no savedScrollPositions available
@@ -45254,17 +45287,22 @@ const defaultMapRouteProperties = (route)=>({
             getScrollRestorationKey = null;
         };
     }
+    function getScrollKey(location, matches) {
+        if (getScrollRestorationKey) {
+            let key = getScrollRestorationKey(location, matches.map((m)=>createUseMatchesMatch(m, state.loaderData)));
+            return key || location.key;
+        }
+        return location.key;
+    }
     function saveScrollPosition(location, matches) {
-        if (savedScrollPositions && getScrollRestorationKey && getScrollPosition) {
-            let userMatches = matches.map((m)=>createUseMatchesMatch(m, state.loaderData));
-            let key = getScrollRestorationKey(location, userMatches) || location.key;
+        if (savedScrollPositions && getScrollPosition) {
+            let key = getScrollKey(location, matches);
             savedScrollPositions[key] = getScrollPosition();
         }
     }
     function getSavedScrollPosition(location, matches) {
-        if (savedScrollPositions && getScrollRestorationKey && getScrollPosition) {
-            let userMatches = matches.map((m)=>createUseMatchesMatch(m, state.loaderData));
-            let key = getScrollRestorationKey(location, userMatches) || location.key;
+        if (savedScrollPositions) {
+            let key = getScrollKey(location, matches);
             let y = savedScrollPositions[key];
             if (typeof y === "number") return y;
         }
@@ -45499,7 +45537,11 @@ function createStaticHandler(routes, opts) {
                 error
             };
         } else {
-            result = await callLoaderOrAction("action", request, actionMatch, matches, manifest, mapRouteProperties, basename, true, isRouteRequest, requestContext);
+            result = await callLoaderOrAction("action", request, actionMatch, matches, manifest, mapRouteProperties, basename, {
+                isStaticRequest: true,
+                isRouteRequest,
+                requestContext
+            });
             if (request.signal.aborted) {
                 let method = isRouteRequest ? "queryRoute" : "query";
                 throw new Error(method + "() call aborted");
@@ -45605,7 +45647,11 @@ function createStaticHandler(routes, opts) {
             activeDeferreds: null
         };
         let results = await Promise.all([
-            ...matchesToLoad.map((match)=>callLoaderOrAction("loader", request, match, matches, manifest, mapRouteProperties, basename, true, isRouteRequest, requestContext))
+            ...matchesToLoad.map((match)=>callLoaderOrAction("loader", request, match, matches, manifest, mapRouteProperties, basename, {
+                    isStaticRequest: true,
+                    isRouteRequest,
+                    requestContext
+                }))
         ]);
         if (request.signal.aborted) {
             let method = isRouteRequest ? "queryRoute" : "query";
@@ -45647,7 +45693,7 @@ function createStaticHandler(routes, opts) {
     return newContext;
 }
 function isSubmissionNavigation(opts) {
-    return opts != null && "formData" in opts;
+    return opts != null && ("formData" in opts && opts.formData != null || "body" in opts && opts.body !== undefined);
 }
 function normalizeTo(location, matches, basename, prependBasename, to, fromRouteId, relative) {
     let contextualMatches;
@@ -45703,24 +45749,92 @@ function normalizeNavigateOptions(normalizeFormMethod, isFetcher, path, opts) {
             method: opts.formMethod
         })
     };
-    // Create a Submission on non-GET navigations
-    let submission;
-    if (opts.formData) {
-        let formMethod = opts.formMethod || "get";
-        submission = {
-            formMethod: normalizeFormMethod ? formMethod.toUpperCase() : formMethod.toLowerCase(),
-            formAction: stripHashFromPath(path),
-            formEncType: opts && opts.formEncType || "application/x-www-form-urlencoded",
-            formData: opts.formData
-        };
-        if (isMutationMethod(submission.formMethod)) return {
+    let getInvalidBodyError = ()=>({
             path,
-            submission
-        };
+            error: getInternalRouterError(400, {
+                type: "invalid-body"
+            })
+        });
+    // Create a Submission on non-GET navigations
+    let rawFormMethod = opts.formMethod || "get";
+    let formMethod = normalizeFormMethod ? rawFormMethod.toUpperCase() : rawFormMethod.toLowerCase();
+    let formAction = stripHashFromPath(path);
+    if (opts.body !== undefined) {
+        if (opts.formEncType === "text/plain") {
+            // text only support POST/PUT/PATCH/DELETE submissions
+            if (!isMutationMethod(formMethod)) return getInvalidBodyError();
+            let text = typeof opts.body === "string" ? opts.body : opts.body instanceof FormData || opts.body instanceof URLSearchParams ? // https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#plain-text-form-data
+            Array.from(opts.body.entries()).reduce((acc, _ref3)=>{
+                let [name, value] = _ref3;
+                return "" + acc + name + "=" + value + "\n";
+            }, "") : String(opts.body);
+            return {
+                path,
+                submission: {
+                    formMethod,
+                    formAction,
+                    formEncType: opts.formEncType,
+                    formData: undefined,
+                    json: undefined,
+                    text
+                }
+            };
+        } else if (opts.formEncType === "application/json") {
+            // json only supports POST/PUT/PATCH/DELETE submissions
+            if (!isMutationMethod(formMethod)) return getInvalidBodyError();
+            try {
+                let json = typeof opts.body === "string" ? JSON.parse(opts.body) : opts.body;
+                return {
+                    path,
+                    submission: {
+                        formMethod,
+                        formAction,
+                        formEncType: opts.formEncType,
+                        formData: undefined,
+                        json,
+                        text: undefined
+                    }
+                };
+            } catch (e) {
+                return getInvalidBodyError();
+            }
+        }
     }
+    invariant(typeof FormData === "function", "FormData is not available in this environment");
+    let searchParams;
+    let formData;
+    if (opts.formData) {
+        searchParams = convertFormDataToSearchParams(opts.formData);
+        formData = opts.formData;
+    } else if (opts.body instanceof FormData) {
+        searchParams = convertFormDataToSearchParams(opts.body);
+        formData = opts.body;
+    } else if (opts.body instanceof URLSearchParams) {
+        searchParams = opts.body;
+        formData = convertSearchParamsToFormData(searchParams);
+    } else if (opts.body == null) {
+        searchParams = new URLSearchParams();
+        formData = new FormData();
+    } else try {
+        searchParams = new URLSearchParams(opts.body);
+        formData = convertSearchParamsToFormData(searchParams);
+    } catch (e) {
+        return getInvalidBodyError();
+    }
+    let submission = {
+        formMethod,
+        formAction,
+        formEncType: opts && opts.formEncType || "application/x-www-form-urlencoded",
+        formData,
+        json: undefined,
+        text: undefined
+    };
+    if (isMutationMethod(submission.formMethod)) return {
+        path,
+        submission
+    };
     // Flatten submission onto URLSearchParams for GET submissions
     let parsedPath = parsePath(path);
-    let searchParams = convertFormDataToSearchParams(opts.formData);
     // On GET navigation submissions we can drop the ?index param from the
     // resulting location since all loaders will run.  But fetcher GET submissions
     // only run a single loader so we need to preserve any incoming ?index params
@@ -45741,7 +45855,7 @@ function getLoaderMatchesUntilBoundary(matches, boundaryId) {
     }
     return boundaryMatches;
 }
-function getMatchesToLoad(history, state, matches, submission, location, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, fetchLoadMatches, routesToUse, basename, pendingActionData, pendingError) {
+function getMatchesToLoad(history, state, matches, submission, location, isRevalidationRequired, cancelledDeferredRoutes, cancelledFetcherLoads, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, pendingActionData, pendingError) {
     let actionResult = pendingError ? Object.values(pendingError)[0] : pendingActionData ? Object.values(pendingActionData)[0] : undefined;
     let currentUrl = history.createURL(state.location);
     let nextUrl = history.createURL(location);
@@ -45792,30 +45906,28 @@ function getMatchesToLoad(history, state, matches, submission, location, isReval
             });
             return;
         }
-        let fetcherMatch = getTargetMatch(fetcherMatches, f.path);
-        if (cancelledFetcherLoads.includes(key)) {
-            revalidatingFetchers.push({
-                key,
-                routeId: f.routeId,
-                path: f.path,
-                matches: fetcherMatches,
-                match: fetcherMatch,
-                controller: new AbortController()
-            });
-            return;
-        }
         // Revalidating fetchers are decoupled from the route matches since they
-        // hit a static href, so they _always_ check shouldRevalidate and the
-        // default is strictly if a revalidation is explicitly required (action
-        // submissions, useRevalidator, X-Remix-Revalidate).
-        let shouldRevalidate = shouldRevalidateLoader(fetcherMatch, _extends({
+        // load from a static href.  They only set `defaultShouldRevalidate` on
+        // explicit revalidation due to submission, useRevalidator, or X-Remix-Revalidate
+        //
+        // They automatically revalidate without even calling shouldRevalidate if:
+        // - They were cancelled
+        // - They're in the middle of their first load and therefore this is still
+        //   an initial load and not a revalidation
+        //
+        // If neither of those is true, then they _always_ check shouldRevalidate
+        let fetcher = state.fetchers.get(key);
+        let isPerformingInitialLoad = fetcher && fetcher.state !== "idle" && fetcher.data === undefined && // If a fetcher.load redirected then it'll be "loading" without any data
+        // so ensure we're not processing the redirect from this fetcher
+        !fetchRedirectIds.has(key);
+        let fetcherMatch = getTargetMatch(fetcherMatches, f.path);
+        let shouldRevalidate = cancelledFetcherLoads.includes(key) || isPerformingInitialLoad || shouldRevalidateLoader(fetcherMatch, _extends({
             currentUrl,
             currentParams: state.matches[state.matches.length - 1].params,
             nextUrl,
             nextParams: matches[matches.length - 1].params
         }, submission, {
             actionResult,
-            // Forced revalidation due to submission, useRevalidator, or X-Remix-Revalidate
             defaultShouldRevalidate: isRevalidationRequired
         }));
         if (shouldRevalidate) revalidatingFetchers.push({
@@ -45896,9 +46008,8 @@ function shouldRevalidateLoader(loaderMatch, arg) {
         lazy: undefined
     }));
 }
-async function callLoaderOrAction(type, request, match, matches, manifest, mapRouteProperties, basename, isStaticRequest, isRouteRequest, requestContext) {
-    if (isStaticRequest === void 0) isStaticRequest = false;
-    if (isRouteRequest === void 0) isRouteRequest = false;
+async function callLoaderOrAction(type, request, match, matches, manifest, mapRouteProperties, basename, opts) {
+    if (opts === void 0) opts = {};
     let resultType;
     let result;
     let onReject;
@@ -45912,7 +46023,7 @@ async function callLoaderOrAction(type, request, match, matches, manifest, mapRo
             handler({
                 request,
                 params: match.params,
-                context: requestContext
+                context: opts.requestContext
             }),
             abortPromise
         ]);
@@ -45972,7 +46083,7 @@ async function callLoaderOrAction(type, request, match, matches, manifest, mapRo
             invariant(location, "Redirects returned/thrown from loaders/actions must have a Location header");
             // Support relative routing in internal redirects
             if (!ABSOLUTE_URL_REGEX.test(location)) location = normalizeTo(new URL(request.url), matches.slice(0, matches.indexOf(match) + 1), basename, true, location);
-            else if (!isStaticRequest) {
+            else if (!opts.isStaticRequest) {
                 // Strip off the protocol+origin for same-origin + same-basename absolute
                 // redirects. If this is a static request, we can let it go back to the
                 // browser as-is
@@ -45985,7 +46096,7 @@ async function callLoaderOrAction(type, request, match, matches, manifest, mapRo
             // Instead, throw the Response and let the server handle it with an HTTP
             // redirect.  We also update the Location header in place in this flow so
             // basename and relative routing is taken into account
-            if (isStaticRequest) {
+            if (opts.isStaticRequest) {
                 result.headers.set("Location", location);
                 throw result;
             }
@@ -45999,7 +46110,7 @@ async function callLoaderOrAction(type, request, match, matches, manifest, mapRo
         // For SSR single-route requests, we want to hand Responses back directly
         // without unwrapping.  We do this with the QueryRouteResponse wrapper
         // interface so we can know whether it was returned or thrown
-        if (isRouteRequest) // eslint-disable-next-line no-throw-literal
+        if (opts.isRouteRequest) // eslint-disable-next-line no-throw-literal
         throw {
             type: resultType || ResultType.data,
             response: result
@@ -46049,21 +46160,35 @@ function createClientSideRequest(history, location, signal, submission) {
         signal
     };
     if (submission && isMutationMethod(submission.formMethod)) {
-        let { formMethod , formEncType , formData  } = submission;
+        let { formMethod , formEncType  } = submission;
         // Didn't think we needed this but it turns out unlike other methods, patch
         // won't be properly normalized to uppercase and results in a 405 error.
         // See: https://fetch.spec.whatwg.org/#concept-method
         init.method = formMethod.toUpperCase();
-        init.body = formEncType === "application/x-www-form-urlencoded" ? convertFormDataToSearchParams(formData) : formData;
+        if (formEncType === "application/json") {
+            init.headers = new Headers({
+                "Content-Type": formEncType
+            });
+            init.body = JSON.stringify(submission.json);
+        } else if (formEncType === "text/plain") // Content-Type is inferred (https://fetch.spec.whatwg.org/#dom-request)
+        init.body = submission.text;
+        else if (formEncType === "application/x-www-form-urlencoded" && submission.formData) // Content-Type is inferred (https://fetch.spec.whatwg.org/#dom-request)
+        init.body = convertFormDataToSearchParams(submission.formData);
+        else // Content-Type is inferred (https://fetch.spec.whatwg.org/#dom-request)
+        init.body = submission.formData;
     }
-    // Content-Type is inferred (https://fetch.spec.whatwg.org/#dom-request)
     return new Request(url, init);
 }
 function convertFormDataToSearchParams(formData) {
     let searchParams = new URLSearchParams();
     for (let [key, value] of formData.entries())// https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#converting-an-entry-list-to-a-list-of-name-value-pairs
-    searchParams.append(key, value instanceof File ? value.name : value);
+    searchParams.append(key, typeof value === "string" ? value : value.name);
     return searchParams;
+}
+function convertSearchParamsToFormData(searchParams) {
+    let formData = new FormData();
+    for (let [key, value] of searchParams.entries())formData.append(key, value);
+    return formData;
 }
 function processRouteLoaderData(matches, matchesToLoad, results, pendingError, activeDeferreds) {
     // Fill in loaderData/errors from our loaders
@@ -46147,15 +46272,7 @@ function processLoaderData(state, matches, matchesToLoad, results, pendingError,
         // in resolveDeferredResults
         invariant(false, "Unhandled fetcher deferred data");
         else {
-            let doneFetcher = {
-                state: "idle",
-                data: result.data,
-                formMethod: undefined,
-                formAction: undefined,
-                formEncType: undefined,
-                formData: undefined,
-                " _hasFetcherDoneAnything ": true
-            };
+            let doneFetcher = getDoneFetcher(result.data);
             state.fetchers.set(key, doneFetcher);
         }
     }
@@ -46211,6 +46328,7 @@ function getInternalRouterError(status, _temp4) {
         statusText = "Bad Request";
         if (method && pathname && routeId) errorMessage = "You made a " + method + ' request to "' + pathname + '" but ' + ('did not provide a `loader` for route "' + routeId + '", ') + "so there is no way to handle the request.";
         else if (type === "defer-action") errorMessage = "defer() is not supported in actions";
+        else if (type === "invalid-body") errorMessage = "Unable to encode submission body";
     } else if (status === 403) {
         statusText = "Forbidden";
         errorMessage = 'Route "' + routeId + '" does not match URL "' + pathname + '"';
@@ -46346,6 +46464,131 @@ function getTargetMatch(matches, location) {
     // pathless layout routes)
     let pathMatches = getPathContributingMatches(matches);
     return pathMatches[pathMatches.length - 1];
+}
+function getSubmissionFromNavigation(navigation) {
+    let { formMethod , formAction , formEncType , text , formData , json  } = navigation;
+    if (!formMethod || !formAction || !formEncType) return;
+    if (text != null) return {
+        formMethod,
+        formAction,
+        formEncType,
+        formData: undefined,
+        json: undefined,
+        text
+    };
+    else if (formData != null) return {
+        formMethod,
+        formAction,
+        formEncType,
+        formData,
+        json: undefined,
+        text: undefined
+    };
+    else if (json !== undefined) return {
+        formMethod,
+        formAction,
+        formEncType,
+        formData: undefined,
+        json,
+        text: undefined
+    };
+}
+function getLoadingNavigation(location, submission) {
+    if (submission) {
+        let navigation = {
+            state: "loading",
+            location,
+            formMethod: submission.formMethod,
+            formAction: submission.formAction,
+            formEncType: submission.formEncType,
+            formData: submission.formData,
+            json: submission.json,
+            text: submission.text
+        };
+        return navigation;
+    } else {
+        let navigation = {
+            state: "loading",
+            location,
+            formMethod: undefined,
+            formAction: undefined,
+            formEncType: undefined,
+            formData: undefined,
+            json: undefined,
+            text: undefined
+        };
+        return navigation;
+    }
+}
+function getSubmittingNavigation(location, submission) {
+    let navigation = {
+        state: "submitting",
+        location,
+        formMethod: submission.formMethod,
+        formAction: submission.formAction,
+        formEncType: submission.formEncType,
+        formData: submission.formData,
+        json: submission.json,
+        text: submission.text
+    };
+    return navigation;
+}
+function getLoadingFetcher(submission, data) {
+    if (submission) {
+        let fetcher = {
+            state: "loading",
+            formMethod: submission.formMethod,
+            formAction: submission.formAction,
+            formEncType: submission.formEncType,
+            formData: submission.formData,
+            json: submission.json,
+            text: submission.text,
+            data,
+            " _hasFetcherDoneAnything ": true
+        };
+        return fetcher;
+    } else {
+        let fetcher = {
+            state: "loading",
+            formMethod: undefined,
+            formAction: undefined,
+            formEncType: undefined,
+            formData: undefined,
+            json: undefined,
+            text: undefined,
+            data,
+            " _hasFetcherDoneAnything ": true
+        };
+        return fetcher;
+    }
+}
+function getSubmittingFetcher(submission, existingFetcher) {
+    let fetcher = {
+        state: "submitting",
+        formMethod: submission.formMethod,
+        formAction: submission.formAction,
+        formEncType: submission.formEncType,
+        formData: submission.formData,
+        json: submission.json,
+        text: submission.text,
+        data: existingFetcher ? existingFetcher.data : undefined,
+        " _hasFetcherDoneAnything ": true
+    };
+    return fetcher;
+}
+function getDoneFetcher(data) {
+    let fetcher = {
+        state: "idle",
+        formMethod: undefined,
+        formAction: undefined,
+        formEncType: undefined,
+        formData: undefined,
+        json: undefined,
+        text: undefined,
+        data,
+        " _hasFetcherDoneAnything ": true
+    };
+    return fetcher;
 }
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"d6HH4":[function() {},{}],"km3Ru":[function(require,module,exports) {
@@ -46499,12 +46742,57 @@ parcelHelpers.export(exports, "MovieView", ()=>MovieView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _reactRouter = require("react-router");
 var _reactRouterDom = require("react-router-dom");
+var _reactBootstrap = require("react-bootstrap");
+var _react = require("react");
 var _movieViewScss = require("./movie-view.scss");
 var _s = $RefreshSig$();
-const MovieView = ({ movies  })=>{
+const MovieView = ({ user , token , movies , onLoggedIn  })=>{
     _s();
     const { movieId  } = (0, _reactRouter.useParams)();
     const movie = movies.find((m)=>m.id === movieId);
+    const [isFavorite, setIsFavorite] = (0, _react.useState)(user.FavoriteMovies.includes(movie.id));
+    (0, _react.useEffect)(()=>{
+        setIsFavorite(user.FavoriteMovies.includes(movie.id));
+    }, [
+        movieId
+    ]);
+    const addFavorite = ()=>{
+        fetch(`https://node-movie-api-mattg.herokuapp.com/users/${user.Username}/list/${movie.id}`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>response.json()).then((data)=>{
+            console.log(data);
+            if (data.success) {
+                alert("Added to favorites!");
+                setIsFavorite(true);
+                localStorage.setItem("user", JSON.stringify(data.success));
+                onLoggedIn(data.success);
+            } else {
+                alert("Update failed...");
+                return false;
+            }
+        });
+    };
+    const removeFavorite = ()=>{
+        fetch(`https://node-movie-api-mattg.herokuapp.com/users/${user.Username}/list/${movie.id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>response.json()).then((data)=>{
+            if (data.success) {
+                alert("Removed from favorites!");
+                setIsFavorite(false);
+                localStorage.setItem("user", JSON.stringify(data.success));
+                onLoggedIn(data.success);
+            } else {
+                alert("Update failed...");
+                return false;
+            }
+        });
+    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -46513,12 +46801,34 @@ const MovieView = ({ movies  })=>{
                     src: movie.Imageurl
                 }, void 0, false, {
                     fileName: "src/components/movie-view/movie-view.jsx",
-                    lineNumber: 13,
+                    lineNumber: 73,
                     columnNumber: 9
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 12,
+                lineNumber: 72,
+                columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                        children: "ID: "
+                    }, void 0, false, {
+                        fileName: "src/components/movie-view/movie-view.jsx",
+                        lineNumber: 76,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                        children: movie.id
+                    }, void 0, false, {
+                        fileName: "src/components/movie-view/movie-view.jsx",
+                        lineNumber: 77,
+                        columnNumber: 9
+                    }, undefined)
+                ]
+            }, void 0, true, {
+                fileName: "src/components/movie-view/movie-view.jsx",
+                lineNumber: 75,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -46527,20 +46837,20 @@ const MovieView = ({ movies  })=>{
                         children: "Title: "
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 16,
+                        lineNumber: 80,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
                         children: movie.Title
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 17,
+                        lineNumber: 81,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 15,
+                lineNumber: 79,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -46549,20 +46859,20 @@ const MovieView = ({ movies  })=>{
                         children: "Description: "
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 20,
+                        lineNumber: 84,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
                         children: movie.Description
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 21,
+                        lineNumber: 85,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 19,
+                lineNumber: 83,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -46571,20 +46881,20 @@ const MovieView = ({ movies  })=>{
                         children: "Director: "
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 24,
+                        lineNumber: 88,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
                         children: movie.Director.Name
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 25,
+                        lineNumber: 89,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 23,
+                lineNumber: 87,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -46593,20 +46903,20 @@ const MovieView = ({ movies  })=>{
                         children: "Release Year: "
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 29,
+                        lineNumber: 93,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
                         children: movie.ReleaseYear
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 30,
+                        lineNumber: 94,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 28,
+                lineNumber: 92,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -46615,20 +46925,20 @@ const MovieView = ({ movies  })=>{
                         children: "Rating: "
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 33,
+                        lineNumber: 97,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
                         children: movie.Ratings
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 34,
+                        lineNumber: 98,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 32,
+                lineNumber: 96,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -46637,48 +46947,74 @@ const MovieView = ({ movies  })=>{
                         children: "Genre: "
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 37,
+                        lineNumber: 101,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
                         children: movie.Genre.Name
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 38,
+                        lineNumber: 102,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 36,
+                lineNumber: 100,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
                 to: `/`,
                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                    className: "back-button",
+                    className: "button",
                     style: {
                         cursor: "pointer"
                     },
                     children: "Back"
                 }, void 0, false, {
                     fileName: "src/components/movie-view/movie-view.jsx",
-                    lineNumber: 42,
+                    lineNumber: 106,
                     columnNumber: 9
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 41,
+                lineNumber: 105,
                 columnNumber: 7
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                children: " "
+            }, void 0, false, {
+                fileName: "src/components/movie-view/movie-view.jsx",
+                lineNumber: 110,
+                columnNumber: 7
+            }, undefined),
+            isFavorite ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
+                variant: "danger",
+                className: "ms-2",
+                onClick: removeFavorite,
+                children: "Remove from favorites"
+            }, void 0, false, {
+                fileName: "src/components/movie-view/movie-view.jsx",
+                lineNumber: 112,
+                columnNumber: 9
+            }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
+                variant: "success",
+                className: "ms-2",
+                onClick: addFavorite,
+                children: "Add to favorites"
+            }, void 0, false, {
+                fileName: "src/components/movie-view/movie-view.jsx",
+                lineNumber: 114,
+                columnNumber: 9
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/movie-view/movie-view.jsx",
-        lineNumber: 11,
+        lineNumber: 71,
         columnNumber: 5
     }, undefined);
 };
-_s(MovieView, "e2L2DPdRH1AShA7yIOCsYRlzvlI=", false, function() {
+_s(MovieView, "OZu1dgkcEaeLBH+1f5+nNY8GNNM=", false, function() {
     return [
         (0, _reactRouter.useParams)
     ];
@@ -46692,7 +47028,7 @@ $RefreshReg$(_c, "MovieView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react-router":"dbWyW","react-router-dom":"9xmpe","./movie-view.scss":"jnlR5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"jnlR5":[function() {},{}],"9YtA0":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react-router":"dbWyW","react-router-dom":"9xmpe","react-bootstrap":"3AD9A","react":"21dqq","./movie-view.scss":"jnlR5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"jnlR5":[function() {},{}],"9YtA0":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$9fee = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -46731,6 +47067,9 @@ const LoginView = ({ onLoggedIn  })=>{
                 localStorage.setItem("user", JSON.stringify(data.user));
                 localStorage.setItem("token", data.token);
                 onLoggedIn(data.user, data.token);
+            } else if (res.status(401)) {
+                console.log("Hello!");
+                console.log(data);
             } else alert("User not found.");
         }).catch((e)=>{
             console.log(e);
@@ -46747,7 +47086,7 @@ const LoginView = ({ onLoggedIn  })=>{
                         children: "Username:"
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 40,
+                        lineNumber: 45,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -46757,13 +47096,13 @@ const LoginView = ({ onLoggedIn  })=>{
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 41,
+                        lineNumber: 46,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 39,
+                lineNumber: 44,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -46772,7 +47111,7 @@ const LoginView = ({ onLoggedIn  })=>{
                         children: "Password:"
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 49,
+                        lineNumber: 54,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -46782,13 +47121,13 @@ const LoginView = ({ onLoggedIn  })=>{
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 50,
+                        lineNumber: 55,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 48,
+                lineNumber: 53,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
@@ -46796,13 +47135,13 @@ const LoginView = ({ onLoggedIn  })=>{
                 children: "Submit"
             }, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 57,
+                lineNumber: 62,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/login-view/login-view.jsx",
-        lineNumber: 38,
+        lineNumber: 43,
         columnNumber: 5
     }, undefined);
 };
@@ -46832,6 +47171,7 @@ var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
 var _form = require("react-bootstrap/Form");
 var _formDefault = parcelHelpers.interopDefault(_form);
+var _reactRouterDom = require("react-router-dom");
 var _s = $RefreshSig$();
 const SignupView = ()=>{
     _s();
@@ -46839,6 +47179,7 @@ const SignupView = ()=>{
     const [password, setPassword] = (0, _react.useState)("");
     const [email, setEmail] = (0, _react.useState)("");
     const [birthday, setBirthday] = (0, _react.useState)("");
+    const navigate = (0, _reactRouterDom.useNavigate)();
     const handleSubmit = (event)=>{
         event.preventDefault();
         const data = {
@@ -46856,7 +47197,7 @@ const SignupView = ()=>{
         }).then((response)=>{
             if (response.ok) {
                 alert("Signup successful");
-                window.location.reload();
+                navigate("/");
             } else alert("Signup failed");
         });
     };
@@ -46870,7 +47211,7 @@ const SignupView = ()=>{
                         children: "Username:"
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 41,
+                        lineNumber: 43,
                         columnNumber: 13
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -46881,13 +47222,13 @@ const SignupView = ()=>{
                         minLength: "3"
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 42,
+                        lineNumber: 44,
                         columnNumber: 13
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/signup-view/signup-view.jsx",
-                lineNumber: 40,
+                lineNumber: 42,
                 columnNumber: 11
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -46896,7 +47237,7 @@ const SignupView = ()=>{
                         children: "Password:"
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 51,
+                        lineNumber: 53,
                         columnNumber: 13
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -46906,13 +47247,13 @@ const SignupView = ()=>{
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 52,
+                        lineNumber: 54,
                         columnNumber: 13
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/signup-view/signup-view.jsx",
-                lineNumber: 50,
+                lineNumber: 52,
                 columnNumber: 11
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -46921,7 +47262,7 @@ const SignupView = ()=>{
                         children: "Email:"
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 60,
+                        lineNumber: 62,
                         columnNumber: 13
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -46931,13 +47272,13 @@ const SignupView = ()=>{
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 61,
+                        lineNumber: 63,
                         columnNumber: 13
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/signup-view/signup-view.jsx",
-                lineNumber: 59,
+                lineNumber: 61,
                 columnNumber: 11
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -46946,7 +47287,7 @@ const SignupView = ()=>{
                         children: "Birthday:"
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 69,
+                        lineNumber: 71,
                         columnNumber: 13
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -46956,13 +47297,13 @@ const SignupView = ()=>{
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 70,
+                        lineNumber: 72,
                         columnNumber: 13
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/signup-view/signup-view.jsx",
-                lineNumber: 68,
+                lineNumber: 70,
                 columnNumber: 11
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
@@ -46970,17 +47311,21 @@ const SignupView = ()=>{
                 children: "Submit"
             }, void 0, false, {
                 fileName: "src/components/signup-view/signup-view.jsx",
-                lineNumber: 77,
+                lineNumber: 79,
                 columnNumber: 11
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/signup-view/signup-view.jsx",
-        lineNumber: 39,
+        lineNumber: 41,
         columnNumber: 9
     }, undefined);
 };
-_s(SignupView, "jsOQN3GC2XlBG9ITlzCdpyJOnso=");
+_s(SignupView, "9EY7aHBTeX4vrgzfukBDdK8v2Cw=", false, function() {
+    return [
+        (0, _reactRouterDom.useNavigate)
+    ];
+});
 _c = SignupView;
 var _c;
 $RefreshReg$(_c, "SignupView");
@@ -46990,7 +47335,7 @@ $RefreshReg$(_c, "SignupView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-bootstrap/Button":"aPzUt","react-bootstrap/Form":"iBZ80","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"bsPVM":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-bootstrap/Button":"aPzUt","react-bootstrap/Form":"iBZ80","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"9xmpe"}],"bsPVM":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$abf5 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -47135,62 +47480,167 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _reactRouter = require("react-router");
 var _reactRouterDom = require("react-router-dom");
 var _reactBootstrap = require("react-bootstrap");
-const ProfileView = ({ user  })=>{
+var _movieCardJsx = require("../movie-card/movie-card.jsx");
+var _s = $RefreshSig$();
+const ProfileView = ({ user , token , movies , onLoggedOut  })=>{
+    _s();
+    let favoriteMovies = movies.filter((movie)=>user.FavoriteMovies.includes(movie.id));
+    const navigate = (0, _reactRouterDom.useNavigate)();
     if (!user.Birthday) user.Birthday = "N/A";
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card), {
+    let nullMovies = "";
+    if (user.FavoriteMovies < 1) nullMovies = "N/A";
+    const deleteUser = ()=>{
+        fetch(`https://node-movie-api-mattg.herokuapp.com/users/${user.Username}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((user)=>{
+            if (!user) {
+                alert("Deletion failed...");
+                return false;
+            } else {
+                alert("User is being deleted. Redirecting...");
+                onLoggedOut();
+                navigate("/");
+            }
+        }).catch((e)=>{
+            console.log(e);
+            alert(e);
+        });
+    };
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Text, {
-                children: [
-                    "Username: ",
-                    user.Username
-                ]
-            }, void 0, true, {
-                fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 11,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Text, {
-                children: [
-                    "Email: ",
-                    user.Email
-                ]
-            }, void 0, true, {
-                fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 12,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Text, {
-                children: [
-                    "Birthday: ",
-                    user.Birthday
-                ]
-            }, void 0, true, {
-                fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 13,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
-                as: (0, _reactRouterDom.Link),
-                to: "/update",
-                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
-                    children: "Edit Profile"
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
+                className: "mb-4",
+                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card), {
+                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Body, {
+                        className: "body",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Text, {
+                                children: [
+                                    "Username: ",
+                                    user.Username
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 46,
+                                columnNumber: 9
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Text, {
+                                children: [
+                                    "Email: ",
+                                    user.Email
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 47,
+                                columnNumber: 9
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Card).Text, {
+                                children: [
+                                    "Birthday: ",
+                                    user.Birthday
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 48,
+                                columnNumber: 9
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                                style: {
+                                    display: "flex"
+                                },
+                                children: [
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
+                                        as: (0, _reactRouterDom.Link),
+                                        to: "/update",
+                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
+                                            children: "Edit Profile"
+                                        }, void 0, false, {
+                                            fileName: "src/components/profile-view/profile-view.jsx",
+                                            lineNumber: 51,
+                                            columnNumber: 11
+                                        }, undefined)
+                                    }, void 0, false, {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 50,
+                                        columnNumber: 9
+                                    }, undefined),
+                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
+                                        style: {
+                                            marginLeft: "auto"
+                                        },
+                                        variant: "danger",
+                                        onClick: deleteUser,
+                                        children: "Delete Profile"
+                                    }, void 0, false, {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 53,
+                                        columnNumber: 9
+                                    }, undefined)
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 49,
+                                columnNumber: 9
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/components/profile-view/profile-view.jsx",
+                        lineNumber: 45,
+                        columnNumber: 9
+                    }, undefined)
                 }, void 0, false, {
                     fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 15,
-                    columnNumber: 9
+                    lineNumber: 44,
+                    columnNumber: 7
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 14,
-                columnNumber: 7
-            }, undefined)
+                lineNumber: 43,
+                columnNumber: 5
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
+                md: 10,
+                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
+                    children: [
+                        user.Username,
+                        " Favorite Movies: ",
+                        nullMovies
+                    ]
+                }, void 0, true, {
+                    fileName: "src/components/profile-view/profile-view.jsx",
+                    lineNumber: 59,
+                    columnNumber: 7
+                }, undefined)
+            }, void 0, false, {
+                fileName: "src/components/profile-view/profile-view.jsx",
+                lineNumber: 58,
+                columnNumber: 5
+            }, undefined),
+            favoriteMovies.map((movie)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
+                    className: "mb-4",
+                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardJsx.MovieCard), {
+                        movie: movie
+                    }, void 0, false, {
+                        fileName: "src/components/profile-view/profile-view.jsx",
+                        lineNumber: 63,
+                        columnNumber: 11
+                    }, undefined)
+                }, movie.id, false, {
+                    fileName: "src/components/profile-view/profile-view.jsx",
+                    lineNumber: 62,
+                    columnNumber: 9
+                }, undefined))
         ]
-    }, void 0, true, {
-        fileName: "src/components/profile-view/profile-view.jsx",
-        lineNumber: 10,
-        columnNumber: 5
-    }, undefined);
+    }, void 0, true);
 };
+_s(ProfileView, "CzcTeTziyjMsSrAVmHuCCb6+Bfg=", false, function() {
+    return [
+        (0, _reactRouterDom.useNavigate)
+    ];
+});
 _c = ProfileView;
 var _c;
 $RefreshReg$(_c, "ProfileView");
@@ -47200,7 +47650,7 @@ $RefreshReg$(_c, "ProfileView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react-router":"dbWyW","react-router-dom":"9xmpe","react-bootstrap":"3AD9A","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"kEeMk":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react-router":"dbWyW","react-router-dom":"9xmpe","react-bootstrap":"3AD9A","../movie-card/movie-card.jsx":"bwuIu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"kEeMk":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$d7d4 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -47216,8 +47666,9 @@ var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
 var _form = require("react-bootstrap/Form");
 var _formDefault = parcelHelpers.interopDefault(_form);
+var _reactRouterDom = require("react-router-dom");
 var _s = $RefreshSig$();
-const UpdateView = ({ user , token , onLoggedOut , onLoggedIn  })=>{
+const UpdateView = ({ user , token , onLoggedOut , onLoggedIn , onUpdated  })=>{
     _s();
     const [username, setUsername] = (0, _react.useState)(user.Username);
     const [oldPassword, setOldPassword] = (0, _react.useState)("");
@@ -47225,16 +47676,18 @@ const UpdateView = ({ user , token , onLoggedOut , onLoggedIn  })=>{
     const [newPassword2, setPassword2] = (0, _react.useState)("");
     const [email, setEmail] = (0, _react.useState)(user.Email);
     const [birthday, setBirthday] = (0, _react.useState)("");
+    const navigate = (0, _reactRouterDom.useNavigate)();
+    OldUsername = user.Username;
+    OldPassword = oldPassword;
+    CheckPassword = newPassword2;
     const handleSubmit = (event)=>{
         event.preventDefault();
         if (newPassword2 !== newPassword) alert("New password fields do not match");
         else {
             const data = {
-                OldUsername: user.Username,
                 Username: username,
-                OldPassword: oldPassword,
                 Password: newPassword,
-                CheckPassword: newPassword2,
+                OldPassword: OldPassword,
                 Email: email,
                 Birthday: birthday
             };
@@ -47245,17 +47698,17 @@ const UpdateView = ({ user , token , onLoggedOut , onLoggedIn  })=>{
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json"
                 }
-            }).then((response)=>{
-                if (response.ok) {
-                    alert("Update successful");
-                    // window.location.reload();
-                    return response.json();
+            }).then((response)=>response.json()).then((data)=>{
+                if (data) {
+                    localStorage.setItem("user", JSON.stringify(data));
+                    console.log("Update response: ", data);
+                    alert("Updated successfully: " + data.Username + ". Redirecting...");
+                    onUpdated(data);
+                    navigate("/");
                 } else {
                     alert("Update failed...");
-                    return response.json();
+                    console.log("Error when updating: ", data);
                 }
-            }).then((user)=>{
-                if (user) onLoggedIn();
             });
         }
     };
@@ -47275,7 +47728,7 @@ const UpdateView = ({ user , token , onLoggedOut , onLoggedIn  })=>{
                         children: "Username:"
                     }, void 0, false, {
                         fileName: "src/components/update-view/update-view.jsx",
-                        lineNumber: 66,
+                        lineNumber: 72,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47285,13 +47738,13 @@ const UpdateView = ({ user , token , onLoggedOut , onLoggedIn  })=>{
                         minLength: "3"
                     }, void 0, false, {
                         fileName: "src/components/update-view/update-view.jsx",
-                        lineNumber: 67,
+                        lineNumber: 73,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/update-view/update-view.jsx",
-                lineNumber: 65,
+                lineNumber: 71,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47300,7 +47753,7 @@ const UpdateView = ({ user , token , onLoggedOut , onLoggedIn  })=>{
                         children: "Current Password:"
                     }, void 0, false, {
                         fileName: "src/components/update-view/update-view.jsx",
-                        lineNumber: 75,
+                        lineNumber: 81,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47310,13 +47763,13 @@ const UpdateView = ({ user , token , onLoggedOut , onLoggedIn  })=>{
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/update-view/update-view.jsx",
-                        lineNumber: 76,
+                        lineNumber: 82,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/update-view/update-view.jsx",
-                lineNumber: 74,
+                lineNumber: 80,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47325,7 +47778,7 @@ const UpdateView = ({ user , token , onLoggedOut , onLoggedIn  })=>{
                         children: "New Password:"
                     }, void 0, false, {
                         fileName: "src/components/update-view/update-view.jsx",
-                        lineNumber: 84,
+                        lineNumber: 90,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47334,13 +47787,13 @@ const UpdateView = ({ user , token , onLoggedOut , onLoggedIn  })=>{
                         onChange: (e)=>setPassword(e.target.value)
                     }, void 0, false, {
                         fileName: "src/components/update-view/update-view.jsx",
-                        lineNumber: 85,
+                        lineNumber: 91,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/update-view/update-view.jsx",
-                lineNumber: 83,
+                lineNumber: 89,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47349,7 +47802,7 @@ const UpdateView = ({ user , token , onLoggedOut , onLoggedIn  })=>{
                         children: "Re-Enter New Password:"
                     }, void 0, false, {
                         fileName: "src/components/update-view/update-view.jsx",
-                        lineNumber: 92,
+                        lineNumber: 98,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47358,13 +47811,13 @@ const UpdateView = ({ user , token , onLoggedOut , onLoggedIn  })=>{
                         onChange: (e)=>setPassword2(e.target.value)
                     }, void 0, false, {
                         fileName: "src/components/update-view/update-view.jsx",
-                        lineNumber: 93,
+                        lineNumber: 99,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/update-view/update-view.jsx",
-                lineNumber: 91,
+                lineNumber: 97,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47373,7 +47826,7 @@ const UpdateView = ({ user , token , onLoggedOut , onLoggedIn  })=>{
                         children: "Email:"
                     }, void 0, false, {
                         fileName: "src/components/update-view/update-view.jsx",
-                        lineNumber: 100,
+                        lineNumber: 106,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47382,13 +47835,13 @@ const UpdateView = ({ user , token , onLoggedOut , onLoggedIn  })=>{
                         onChange: (e)=>setEmail(e.target.value)
                     }, void 0, false, {
                         fileName: "src/components/update-view/update-view.jsx",
-                        lineNumber: 101,
+                        lineNumber: 107,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/update-view/update-view.jsx",
-                lineNumber: 99,
+                lineNumber: 105,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -47397,7 +47850,7 @@ const UpdateView = ({ user , token , onLoggedOut , onLoggedIn  })=>{
                         children: "Birthday:"
                     }, void 0, false, {
                         fileName: "src/components/update-view/update-view.jsx",
-                        lineNumber: 108,
+                        lineNumber: 114,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -47406,31 +47859,35 @@ const UpdateView = ({ user , token , onLoggedOut , onLoggedIn  })=>{
                         onChange: (e)=>setBirthday(e.target.value)
                     }, void 0, false, {
                         fileName: "src/components/update-view/update-view.jsx",
-                        lineNumber: 109,
+                        lineNumber: 115,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/update-view/update-view.jsx",
-                lineNumber: 107,
+                lineNumber: 113,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
                 type: "submit",
-                children: "Update Profile"
+                children: " Save Changes"
             }, void 0, false, {
                 fileName: "src/components/update-view/update-view.jsx",
-                lineNumber: 115,
+                lineNumber: 121,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/update-view/update-view.jsx",
-        lineNumber: 64,
+        lineNumber: 70,
         columnNumber: 5
     }, undefined);
 };
-_s(UpdateView, "CbjwyXMT/31FjEz4AL3s8VWRRVY=");
+_s(UpdateView, "XvaFqfGUuHRMjHhAw9N5vnROeFw=", false, function() {
+    return [
+        (0, _reactRouterDom.useNavigate)
+    ];
+});
 _c = UpdateView;
 var _c;
 $RefreshReg$(_c, "UpdateView");
@@ -47440,6 +47897,6 @@ $RefreshReg$(_c, "UpdateView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-bootstrap/Button":"aPzUt","react-bootstrap/Form":"iBZ80","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"i5LP7":[function() {},{}],"lJZlQ":[function() {},{}]},["4s3Ar","1xC6H","d8Dch"], "d8Dch", "parcelRequireaec4")
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-bootstrap/Button":"aPzUt","react-bootstrap/Form":"iBZ80","react-router-dom":"9xmpe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"i5LP7":[function() {},{}],"lJZlQ":[function() {},{}]},["4s3Ar","1xC6H","d8Dch"], "d8Dch", "parcelRequireaec4")
 
 //# sourceMappingURL=index.b4b6dfad.js.map

@@ -5,14 +5,10 @@ import { Link } from "react-router-dom";
 
 import "./movie-card.scss";
 
-export const MovieCard = ({ movie }) => {
+export const MovieCard = ({ user, token, movie }) => {
   return (
     <Card
       className="h-100 "
-      //style={{ width: "35rem" }}
-      // onClick={() => {
-      //   onMovieClick(movie);
-      // }}
     >
       <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
         <Card.Img
@@ -34,6 +30,7 @@ export const MovieCard = ({ movie }) => {
 
 MovieCard.propTypes = {
   movie: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     Title: PropTypes.string.isRequired,
     Imageurl: PropTypes.string.isRequired,
     Description: PropTypes.string.isRequired,

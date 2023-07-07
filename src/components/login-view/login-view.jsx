@@ -24,7 +24,12 @@ export const LoginView = ({ onLoggedIn }) => {
           localStorage.setItem("user", JSON.stringify(data.user));
           localStorage.setItem("token", data.token);
           onLoggedIn(data.user, data.token);
-        } else {
+        } 
+        else if (res.status(401)){
+          console.log("Hello!");
+          console.log(data);
+        }
+          else {
           alert("User not found.");
         }
       })

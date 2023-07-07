@@ -10,21 +10,25 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
+
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
   const [movies, setMovies] = useState([]);
-
-  const [user, setUser] = useState(storedToken ? storedToken : null);
-  const [token, setToken] = useState(null);
-
+  const [user, setUser] = useState(storedUser? storedUser : null);
+  const [token, setToken] = useState(storedToken? storedToken : null);
+  // const updateUser=user=>{
+  //   setUser(user);
+  //   localStorage.setItem("user", JSONstringify(user));
+  // }
   useEffect(() => {
+    if (!token) return;
+    
     fetch("https://node-movie-api-mattg.herokuapp.com/movies", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data);
         const moviesFromApi = data.map((doc) => {
           return {
             id: doc._id,
@@ -73,7 +77,8 @@ export const MainView = () => {
               <>
                 {user ? (
                   <Navigate to="/" />
-                ) : (
+                ) 
+                :(
                   <Col md={5}>
                     <LoginView
                       onLoggedIn={(user, token) => {
@@ -96,7 +101,10 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <Col md={8}>
-                    <MovieView movies={movies} />
+                    <MovieView user={user} token={token} movies={movies} 
+                    onLoggedIn={(data) => {
+                      setUser(data);
+                    }}/>
                   </Col>
                 )}
               </>
@@ -112,7 +120,7 @@ export const MainView = () => {
                   <>
                     {movies.map((movie) => (
                       <Col className="mb-4" key={movie.id} md={3}>
-                        <MovieCard movie={movie} />
+                        <MovieCard user={user} token={token} movie={movie}/>
                       </Col>
                     ))}
                   </>
@@ -128,7 +136,12 @@ export const MainView = () => {
                   <Navigate to="/login" replace />
                 ) : (
                   <Col md={8}>
-                    <ProfileView user={user} />
+                    <ProfileView user={user} token={token} movies={movies} 
+                    onLoggedOut={() => {
+                      setUser(null);
+                      setToken(null);
+                      localStorage.clear();
+                    }} />
                   </Col>
                 )}
               </>
@@ -140,14 +153,14 @@ export const MainView = () => {
               <>
                 {!user ? (
                   <Navigate to="/login" />
-                ) : (
+                ):(
                   <Col md={5}>
                     <UpdateView
                       user={user}
-                      onLoggedIn={(user, token) => {
-                        setUser(user);
-                        setToken(token);
-                      }}
+                      token={token}
+                      onUpdated={(user) => {
+                        setUser(user)
+                      }} 
                     />
                   </Col>
                 )}
