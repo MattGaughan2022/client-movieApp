@@ -1,8 +1,7 @@
 import { useParams } from "react-router";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Card,Col } from "react-bootstrap";
+import { Button, Card,Col, Row } from "react-bootstrap";
 import { MovieCard } from "../movie-card/movie-card.jsx";
-
 
 export const ProfileView = ({ user, token, movies, onLoggedOut }) => {
   let favoriteMovies = movies.filter(movie=> user.FavoriteMovies.includes(movie.id));
@@ -50,7 +49,7 @@ export const ProfileView = ({ user, token, movies, onLoggedOut }) => {
         <Link as={Link} to={"/update"}>
           <Button>Edit Profile</Button>
         </Link>
-        <Button style={{marginLeft: "auto"}}variant="danger" onClick={deleteUser}>Delete Profile</Button>
+        <Button style={{marginLeft: "auto"}}variant="danger" onClick={deleteUser} >Delete Profile</Button>
         </div>
         </Card.Body>
       </Card>
@@ -58,11 +57,13 @@ export const ProfileView = ({ user, token, movies, onLoggedOut }) => {
     <Col md={10}>
       <h2>{user.Username} Favorite Movies: {nullMovies}</h2>
     </Col>
+    <Row>
       {favoriteMovies.map(movie=>(
-        <Col className="mb-4" key={movie.id}>
+        <Col className="mb-4" md={4} key={movie.id}>
           <MovieCard movie={movie}/>
         </Col>
       ))}
+      </Row>
     </>
   );
 };

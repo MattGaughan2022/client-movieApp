@@ -69,17 +69,18 @@ export const MovieView = ({ user, token, movies, onLoggedIn }) => {
 
   return (
     <div>
-      <div>
-        <img className="w-100" src={movie.Imageurl} />
-      </div>
-      <div>
-        <span>ID: </span>
-        <span>{movie.id}</span>
-      </div>
-      <div>
-        <span>Title: </span>
+      <div class="text-center">
         <span>{movie.Title}</span>
       </div>
+      <div>
+        <img className="w-100" class="center" src={movie.Imageurl} />
+      </div>
+      
+      {/* <div>
+        <span>ID: </span>
+        <span>{movie.id}</span>
+      </div> */}
+      
       <div>
         <span>Description: </span>
         <span>{movie.Description}</span>
@@ -87,7 +88,6 @@ export const MovieView = ({ user, token, movies, onLoggedIn }) => {
       <div>
         <span>Director: </span>
         <span>{movie.Director.Name}</span>
-        {/* modified above line*/}
       </div>
       <div>
         <span>Release Year: </span>
@@ -100,7 +100,6 @@ export const MovieView = ({ user, token, movies, onLoggedIn }) => {
       <div>
         <span>Genre: </span>
         <span>{movie.Genre.Name}</span>
-        {/* modified above line */}
       </div>
       <Link to={`/`}>
         <button className="button" style={{ cursor: "pointer" }}>
