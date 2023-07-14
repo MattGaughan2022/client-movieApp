@@ -69,11 +69,11 @@ export const MovieView = ({ user, token, movies, onLoggedIn }) => {
 
   return (
     <div>
-      <div class="text-center">
+      <div className="text-center">
         <span>{movie.Title}</span>
       </div>
       <div>
-        <img className="w-100" class="center" src={movie.Imageurl} />
+        <img className="w-100 center" src={movie.Imageurl} />
       </div>
       
       {/* <div>

@@ -6,10 +6,12 @@ import { SignupView } from "../signup-view/signup-view";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 import { ProfileView } from "../profile-view/profile-view";
 import { UpdateView } from "../update-view/update-view";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import {Row, Col} from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
+import "./main-view.scss"
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -17,13 +19,40 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [user, setUser] = useState(storedUser? storedUser : null);
   const [token, setToken] = useState(storedToken? storedToken : null);
-  // const updateUser=user=>{
-  //   setUser(user);
-  //   localStorage.setItem("user", JSONstringify(user));
-  // }
+  const [genres, setGenres] = useState([]);
+  const [genreOptions, setGenreOptions] = useState([])
+  const [filter, setFilter] = useState("No Filter");
+  const [filteredMovies, setFilteredMovies] = useState([])
+
+  //dropdown handling
+  const handleFilter = (opt) => {
+    let filtered = movies.filter(movie=> movie.Genre.Name.includes(opt.value));
+    setFilter(opt.value);
+    setFilteredMovies(filtered);
+  }
+  
   useEffect(() => {
     if (!token) return;
-    
+    var d = ["No Filter"];
+
+    //genres obj array fetch
+    fetch("https://node-movie-api-mattg.herokuapp.com/genres", {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((response) => response.json())
+    .then((data) => {
+      const genresFromApi = data.map((doc) => {
+        d.push(doc.Name)
+        return {
+          id: doc._id,
+          Name: doc.Name,
+          Description: doc.Description,
+        };
+      });
+      setGenres(genresFromApi);
+      setGenreOptions(d);
+    });
+
+    //fetch movie list
     fetch("https://node-movie-api-mattg.herokuapp.com/movies", {
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -39,12 +68,14 @@ export const MainView = () => {
             Ratings: doc.Ratings,
             Genre: doc.Genre,
             Director: doc.Director,
+             
           };
         });
         setMovies(moviesFromApi);
       });
-  }, [token]);
 
+ 
+  }, [token]);
   return (
     <BrowserRouter>
       <NavigationBar
@@ -56,7 +87,7 @@ export const MainView = () => {
         }}
       />
       <Row className="justify-content-md-center">
-        <Routes>
+        <Routes> 
           <Route
             path="/signup"
             element={
@@ -116,15 +147,40 @@ export const MainView = () => {
               <>
                 {!user ? (
                   <Navigate to="/login" replace />
-                ) : (
+                ) : filteredMovies.length===0 && filter && filter !=="No Filter" ? (
                   <>
+                    <>No movies found for genre: {filter}</>
+                    <Row></Row>
+                    <Dropdown className="mb-3 w-25" options={genreOptions}  onChange={opt => handleFilter(opt)} value={""} placeholder="Select a Different Genre" />
+                  </>
+                )
+                : filteredMovies.length > 0 ? (
+                  <>
+                  Filter Movies by Genre: 
+                  <Row></Row>
+                  <Dropdown className="mb-3 w-25" options={genreOptions}  onChange={opt => handleFilter(opt)} value={""} placeholder="Select a Genre" />
+                  <Col className="w-100"md={3}></Col>
+                    {filteredMovies.map((movie) => (
+                      <Col className="mb-4" key={movie.id} md={3}>
+                        <MovieCard user={user} token={token} movie={movie}/>
+                      </Col>
+                    ))}
+                    </>
+                )  
+                : filter==="No Filter" ? (
+                  <>
+                    Filter Movies by Genre: 
+                    <Row></Row>
+                    <Dropdown className="mb-3 w-25" options={genreOptions}  onChange={opt => handleFilter(opt)} value={""} placeholder="Select a Genre" />
+                    <Col className="w-100"md={3}></Col>
                     {movies.map((movie) => (
                       <Col className="mb-4" key={movie.id} md={3}>
                         <MovieCard user={user} token={token} movie={movie}/>
                       </Col>
                     ))}
+                    
                   </>
-                )}
+                ):(false)}
               </>
             }
           />
