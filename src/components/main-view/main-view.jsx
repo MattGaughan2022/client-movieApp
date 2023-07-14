@@ -147,7 +147,9 @@ export const MainView = () => {
               <>
                 {!user ? (
                   <Navigate to="/login" replace />
-                ) : filteredMovies.length===0 && filter && filter !=="No Filter" ? (
+                ) : filteredMovies.length===0 && filter && filter !=="No Filter" ? 
+                //handling if no movies under a genre
+                 (
                   <>
                     <>No movies found for genre: {filter}</>
                     <Row></Row>
@@ -155,6 +157,7 @@ export const MainView = () => {
                   </>
                 )
                 : filteredMovies.length > 0 ? (
+                  //handling a genre filter that returns movies
                   <>
                   Filter Movies by Genre: 
                   <Row></Row>
@@ -168,6 +171,7 @@ export const MainView = () => {
                     </>
                 )  
                 : filter==="No Filter" ? (
+                  //return all movies
                   <>
                     Filter Movies by Genre: 
                     <Row></Row>
