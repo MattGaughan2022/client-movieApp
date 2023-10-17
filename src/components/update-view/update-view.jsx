@@ -49,7 +49,7 @@ export const UpdateView = ({
       )
         .then((response) => response.json())
         .then((data) => {
-          if (data) {
+          if (data.infoUpdated) {
             localStorage.setItem("user", JSON.stringify(data));
             console.log("Update response: ", data);
             alert(
