@@ -3,7 +3,13 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 
-export const UpdateView = ({ user, token, onLoggedOut, onLoggedIn, onUpdated}) => {
+export const UpdateView = ({
+  user,
+  token,
+  onLoggedOut,
+  onLoggedIn,
+  onUpdated,
+}) => {
   const [username, setUsername] = useState(user.Username);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setPassword] = useState("");
@@ -12,12 +18,11 @@ export const UpdateView = ({ user, token, onLoggedOut, onLoggedIn, onUpdated}) =
   const [birthday, setBirthday] = useState("");
   const navigate = useNavigate();
 
-  OldUsername = user.Username;
-  OldPassword = oldPassword;
-  CheckPassword = newPassword2;
+  let OldUsername = user.Username;
+  let OldPassword = oldPassword;
+  let CheckPassword = newPassword2;
 
   const handleSubmit = (event) => {
-
     event.preventDefault();
 
     if (newPassword2 !== newPassword) {
@@ -29,8 +34,8 @@ export const UpdateView = ({ user, token, onLoggedOut, onLoggedIn, onUpdated}) =
         OldPassword: OldPassword,
         Email: email,
         Birthday: birthday,
-      }
-      
+      };
+
       fetch(
         `https://node-movie-api-mattg.herokuapp.com/users/${user.Username}`,
         {
@@ -42,22 +47,23 @@ export const UpdateView = ({ user, token, onLoggedOut, onLoggedIn, onUpdated}) =
           },
         }
       )
-        .then((response) =>  response.json())
-        .then((data)=>{
+        .then((response) => response.json())
+        .then((data) => {
           if (data) {
             localStorage.setItem("user", JSON.stringify(data));
             console.log("Update response: ", data);
-            alert("Updated successfully: " + data.Username + ". Redirecting...");
+            alert(
+              "Updated successfully: " + data.Username + ". Redirecting..."
+            );
             onUpdated(data);
             navigate("/");
-          } 
-          else {
+          } else {
             alert("Update failed...");
             console.log("Error when updating: ", data);
-        }});
+          }
+        });
     }
   };
-  
 
   // useEffect(() => {
   //   if (user) {
@@ -118,7 +124,7 @@ export const UpdateView = ({ user, token, onLoggedOut, onLoggedIn, onUpdated}) =
           onChange={(e) => setBirthday(e.target.value)}
         />
       </Form.Group>
-      <Button type="submit" > Save Changes</Button>
+      <Button type="submit"> Save Changes</Button>
     </Form>
   );
 };
