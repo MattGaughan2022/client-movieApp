@@ -6,7 +6,14 @@ By utilizing an API for pulling from a cloud MongoDB database (atlasDB), this ap
 
 Movies are fetched and laid out in card-format and can be selected for more in-depth information about the focused movie. Movies can be un/favorited by the logged-in user. 
 
+![image](https://github.com/MattGaughan2022/client-movieApp/assets/80429635/3ec0f36a-634f-484b-8798-c34cfd14c116)
+
+![image](https://github.com/MattGaughan2022/client-movieApp/assets/80429635/49bd08d8-2aa5-495b-88ac-b2639cfd6daa)
+
 Users can register (POST to database), login, and view a profile page with a few user details listed as well as a card-list of their currently favorited movies. There is also an option to update their profile.
+
+![image](https://github.com/MattGaughan2022/client-movieApp/assets/80429635/f9077cdd-15d0-48bc-ba50-18f3b62aaf15)
+
 
 ### How to get project running
 
