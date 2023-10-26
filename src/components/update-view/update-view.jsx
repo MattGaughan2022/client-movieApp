@@ -81,6 +81,7 @@ export const UpdateView = ({
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           minLength="3"
+          style={{ backgroundColor: "white" }}
         />
       </Form.Group>
       <Form.Group>
@@ -90,6 +91,7 @@ export const UpdateView = ({
           value={oldPassword}
           onChange={(e) => setOldPassword(e.target.value)}
           required
+          style={{ backgroundColor: "white" }}
         />
       </Form.Group>
       <Form.Group>
@@ -98,6 +100,7 @@ export const UpdateView = ({
           type="password"
           value={newPassword}
           onChange={(e) => setPassword(e.target.value)}
+          style={{ backgroundColor: "white" }}
         />
       </Form.Group>
       <Form.Group>
@@ -106,6 +109,7 @@ export const UpdateView = ({
           type="password"
           value={newPassword2}
           onChange={(e) => setPassword2(e.target.value)}
+          style={{ backgroundColor: "white" }}
         />
       </Form.Group>
       <Form.Group>
@@ -114,6 +118,7 @@ export const UpdateView = ({
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          style={{ backgroundColor: "white" }}
         />
       </Form.Group>
       <Form.Group>
@@ -122,6 +127,7 @@ export const UpdateView = ({
           type="date"
           value={birthday}
           onChange={(e) => setBirthday(e.target.value)}
+          style={{ backgroundColor: "white" }}
         />
       </Form.Group>
       <Button type="submit"> Save Changes</Button>

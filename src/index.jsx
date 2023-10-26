@@ -23,3 +23,4 @@ const root = createRoot(container);
 root.render(<MyFlixApplication />);
 
 //build with 'parcel src/index.html'
+//maybe delete parcel cache files first if building leads to an error

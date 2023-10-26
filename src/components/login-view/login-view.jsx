@@ -24,12 +24,10 @@ export const LoginView = ({ onLoggedIn }) => {
           localStorage.setItem("user", JSON.stringify(data.user));
           localStorage.setItem("token", data.token);
           onLoggedIn(data.user, data.token);
-        } 
-        else if (res.status(401)){
+        } else if (res.status(401)) {
           console.log("Hello!");
           console.log(data);
-        }
-          else {
+        } else {
           alert("User not found.");
         }
       })
@@ -48,6 +46,7 @@ export const LoginView = ({ onLoggedIn }) => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
+          style={{ backgroundColor: "white" }}
         />
       </Form.Group>
       <Form.Group>
@@ -57,6 +56,7 @@ export const LoginView = ({ onLoggedIn }) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          style={{ backgroundColor: "white" }}
         />
       </Form.Group>
       <Button type="submit">Submit</Button>
