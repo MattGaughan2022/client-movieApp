@@ -1,3 +1,8 @@
+### LINKS 
+LINK to hosted app --> https://mattg-moviesreact.netlify.app/ 
+
+LINK to GitHub page for API --> https://github.com/MattGaughan2022/nodeMovieAPI 
+
 ## This is the README for the client side of my movie app
 
 ### DESCRIPTION
@@ -18,10 +23,5 @@ Users can register (POST to database), login, and view a profile page with a few
 ### How to get project running
 
 Run `npm install` to acquire all dependencies from the package.json file. Ensure that versions of dependencies align. With `parcel` functional, run the command `parcel src/index.html` from the terminal of the project repository. No need to download the API files as they are hosted on a server.
-
-### LINKS 
-LINK to hosted app --> https://mattg-moviesreact.netlify.app/ 
-
-LINK to GitHub page for API --> https://github.com/MattGaughan2022/nodeMovieAPI 
 
 
